@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">JobSharing</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="add_image">Add Image</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="welcome_back">Welcom back!</string>
+    <string name="login_to_continue">Login to continue</string>
+    <string name="student_id">Student ID</string>
+    <string name="kma_social_media">KMA SOCIAL MEDIA</string>
+    <string name="recent_conversations">Recent Conversations</string>
+    <string name="setting">Setting</string>
+    <string name="profile">Profile</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="create_a_new_post">Create a new post</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="post">Post</string>
+    <string name="follower">Follower</string>
+    <string name="following">Following</string>
+    <string name="edit_your_profile">Edit your profile</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="enter_email_or_student_id">Enter email or student ID</string>
+    <string name="notification">Notification</string>
+    <string name="about_us">About Us</string>
+    <string name="general">General</string>
+    <string name="language">Language</string>
+    <string name="dark_mode">Dark mode</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="do_you_have_any_account">Do you have any account?</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="send_link_reset_password">Send link reset password</string>
+    <string name="back_to">Back to</string>
+</resources>

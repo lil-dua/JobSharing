@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "228494724709",
+    "project_id": "jobsharing-e23be",
+    "storage_bucket": "jobsharing-e23be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228494724709:android:269a15b4ac230ef1f1008c",
+        "android_client_info": {
+          "package_name": "tech.android.jobsharing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228494724709-gfs5t9msrc3raib8bm32grtsj6nomt0u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tech.android.jobsharing",
+            "certificate_hash": "55196aa44c4ae25d3fb2b85efc374bdb9bc5aaf6"
+          }
+        },
+        {
+          "client_id": "228494724709-j45te7ftthhpc8616rqg9af07qg281il.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_EHnSGdC6r34jeqCaZwvWEGzmxEJNK1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228494724709-j45te7ftthhpc8616rqg9af07qg281il.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

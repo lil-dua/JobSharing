@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/primary">
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_30sdp"
+        android:text="@string/profile"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_6sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageSetting"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:background="@drawable/background_icon"
+        android:padding="@dimen/_3sdp"
+        android:src="@drawable/ic_setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:background="@drawable/background_content_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/imageProfile"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_70sdp"
+                        android:background="@drawable/background_image"
+                        android:scaleType="centerCrop"
+                        app:riv_oval="true"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+                    <TextView
+                        android:id="@+id/textPost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/post"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_marginStart="@dimen/_34sdp"
+                        app:layout_constraintStart_toEndOf="@id/imageProfile"
+                        app:layout_constraintBottom_toBottomOf="@id/imageProfile"/>
+                    <TextView
+                        android:id="@+id/textFollower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/follower"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_marginStart="@dimen/_24sdp"
+                        app:layout_constraintStart_toEndOf="@id/textPost"
+                        app:layout_constraintBottom_toBottomOf="@id/imageProfile"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/following"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_marginStart="@dimen/_24sdp"
+                        app:layout_constraintStart_toEndOf="@id/textFollower"
+                        app:layout_constraintBottom_toBottomOf="@id/imageProfile"/>
+
+                    <TextView
+                        android:id="@+id/numPost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_34sdp"
+                        app:layout_constraintStart_toEndOf="@id/imageProfile"
+                        app:layout_constraintTop_toTopOf="@id/imageProfile"/>
+                    <TextView
+                        android:id="@+id/numFollower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_34sdp"
+                        app:layout_constraintStart_toEndOf="@id/textPost"
+                        app:layout_constraintTop_toTopOf="@id/imageProfile"/>
+                    <TextView
+                        android:id="@+id/numFollowing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_34sdp"
+                        app:layout_constraintStart_toEndOf="@id/textFollower"
+                        app:layout_constraintTop_toTopOf="@id/imageProfile"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                 <TextView
+                     android:id="@+id/txtUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="User name"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"
+                     android:layout_marginStart="@dimen/_10sdp"/>
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="Bio"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_10ssp"
+                    android:layout_marginStart="@dimen/_10sdp"/>
+            <FrameLayout
+                android:id="@+id/layoutImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imageEditProfile"
+                    android:layout_width="@dimen/_220sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:background="@drawable/background_button"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/textAddImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/edit_your_profile"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/_10ssp"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/background_content_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageEditProfile">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/newsfeedRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:overScrollMode="never"
+                    android:visibility="gone"
+                    android:padding="@dimen/_20sdp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/primary"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
