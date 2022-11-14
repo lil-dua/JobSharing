@@ -35,8 +35,8 @@ public class SignInActivity extends AppCompatActivity {
     }
     private void signIn(){
         loading(true);
-        final String email = binding.inputEmail.getText().toString();
-        final String password = binding.inputPassword.getText().toString();
+        final String email = binding.inputEmail.getText().toString().trim();
+        final String password = binding.inputPassword.getText().toString().trim();
         //Sign in
         mAuth.signInWithEmailAndPassword(email,password)
                 .addOnSuccessListener(authResult -> {
@@ -45,6 +45,7 @@ public class SignInActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    finish();
                 })
                 .addOnFailureListener(exception ->{
                     loading(false);

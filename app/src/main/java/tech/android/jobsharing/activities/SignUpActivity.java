@@ -41,9 +41,9 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         // Initialize Firebase
-        mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("jobsharing");
+        mAuth = FirebaseAuth.getInstance();
         //set event listeners
         setListeners();
     }
@@ -67,23 +67,25 @@ public class SignUpActivity extends AppCompatActivity {
     private void signUp(){
         loading(true);
         //Get data from edit text into String variables
-        final String name = binding.inputName.getText().toString();
-        final String email = binding.inputEmail.getText().toString();
-        final String studentId = binding.inputStudentID.getText().toString();
+        final String name = binding.inputName.getText().toString().trim();
+        final String email = binding.inputEmail.getText().toString().trim();
+        final String studentId = binding.inputStudentID.getText().toString().trim();
         final String image = encodeImage;
-        final String password = binding.inputPassword.getText().toString();
+        final String password = binding.inputPassword.getText().toString().trim();
         //Create user
-        User user = new User(name,email,studentId,image,password);
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnSuccessListener(authResult -> {
                     loading(false);
+                    String userId = mAuth.getCurrentUser().getUid();
+                    User user = new User(name,email,studentId,image,password);
                     //put user to Realtime database
-                    databaseReference.child("users").setValue(user)
+                    databaseReference.child("Users").child(userId).setValue(user)
                             .addOnSuccessListener(unused -> {
                                 //Access to MainActivity
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
+                                finish();
                             })
                             .addOnFailureListener(exception ->{
                                 loading(false);

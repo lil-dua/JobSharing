@@ -6,10 +6,6 @@ package tech.android.jobsharing.models;
 public class User {
     public String name, email, studentId, image, password;
 
-    public User(){
-
-    }
-
     public User(String name, String email, String studentId, String image, String password) {
         this.name = name;
         this.email = email;
