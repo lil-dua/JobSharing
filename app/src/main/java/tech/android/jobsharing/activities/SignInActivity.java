@@ -21,9 +21,22 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        //check user recent sign in
+        checkRecentSignIn();
         //set event listeners
         setListeners();
+
     }
+
+    //check if user was sign in recent. Access to MainActivity if true.
+    private void checkRecentSignIn() {
+        if(mAuth.getCurrentUser() != null){
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     private void setListeners() {
         binding.textCreateNewAccount.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),SignUpActivity.class)));
         binding.buttonSignIn.setOnClickListener(v -> {
