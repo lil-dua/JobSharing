@@ -12,7 +12,7 @@ public class User implements Parcelable {
     public User(){
 
     }
-    public User(String name, String email, String studentId, String image, String password){
+    public User(String name, String email, String studentId, String image, String password,String userId){
         this.name = name;
         this.email = email;
         this.studentId = studentId;

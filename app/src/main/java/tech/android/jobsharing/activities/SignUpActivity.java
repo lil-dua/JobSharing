@@ -76,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnSuccessListener(authResult -> {
                     loading(false);
                     String userId = mAuth.getCurrentUser().getUid();
-                    User user = new User(name,email,studentId,image,password);
+                    User user = new User(name,email,studentId,image,password,userId);
                     //put user to Realtime database
                     databaseReference.child("Users").child(userId).setValue(user)
                             .addOnSuccessListener(unused -> {

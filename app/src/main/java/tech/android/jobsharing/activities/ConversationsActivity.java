@@ -35,8 +35,9 @@ public class ConversationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conversations);
 
         init();
-        setListeners();
         getUserDetail();
+        setListeners();
+
 
     }
 
