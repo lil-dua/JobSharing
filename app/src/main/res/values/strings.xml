@@ -50,4 +50,6 @@
     <string name="enter_your_email">Enter your email</string>
     <string name="send_link_reset_password">Send link reset password</string>
     <string name="back_to">Back to</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="online">Online</string>
 </resources>

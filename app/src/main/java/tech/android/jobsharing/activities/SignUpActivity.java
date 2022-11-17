@@ -2,7 +2,6 @@ package tech.android.jobsharing.activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -42,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         // Initialize Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("jobsharing");
+        databaseReference = firebaseDatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
         //set event listeners
         setListeners();
@@ -85,7 +84,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
-                                finish();
                             })
                             .addOnFailureListener(exception ->{
                                 loading(false);
