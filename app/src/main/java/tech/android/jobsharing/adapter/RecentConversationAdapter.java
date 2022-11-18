@@ -11,10 +11,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.List;
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.activities.ChatActivity;
+import tech.android.jobsharing.models.ChatMessage;
 import tech.android.jobsharing.models.User;
 
 /***
@@ -24,6 +33,8 @@ public class RecentConversationAdapter extends RecyclerView.Adapter<RecentConver
 
     private final Context mContext;
     private List<User> userList;
+
+    String theRecentMessage;
 
     public RecentConversationAdapter(Context mContext,List<User> userList) {
         this.mContext = mContext;
@@ -43,6 +54,7 @@ public class RecentConversationAdapter extends RecyclerView.Adapter<RecentConver
         User user = userList.get(position);
         holder.txtName.setText(user.getName());
         holder.imgProfile.setImageBitmap(getConversionImage(user.getImage()));
+        recentMessage(user.getUserId(),holder.txtRecentMessage);
         //access to chat activity
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, ChatActivity.class);
@@ -61,13 +73,13 @@ public class RecentConversationAdapter extends RecyclerView.Adapter<RecentConver
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public RoundedImageView imgProfile;
-        public TextView txtName,txtLastMessage;
+        public TextView txtName,txtRecentMessage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgProfile = itemView.findViewById(R.id.imageRecentProfile);
             txtName = itemView.findViewById(R.id.textRecentName);
-            txtLastMessage = itemView.findViewById(R.id.textRecentMessage);
+            txtRecentMessage = itemView.findViewById(R.id.textRecentMessage);
         }
     }
 
@@ -75,4 +87,32 @@ public class RecentConversationAdapter extends RecyclerView.Adapter<RecentConver
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes,0, bytes.length);
     }
+
+    //check for recent message
+    private void recentMessage(final String userId, final TextView recentMessage){
+        theRecentMessage = "";
+        final FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    ChatMessage chatMessage = dataSnapshot.getValue(ChatMessage.class);
+                    if(mUser != null && chatMessage != null){
+                        if(chatMessage.getReceiver().equals(mUser.getUid()) && chatMessage.getSender().equals(userId)
+                            || chatMessage.getReceiver().equals(userId) && chatMessage.getSender().equals(mUser.getUid())){
+                            theRecentMessage = chatMessage.getMessage();
+                        }
+                    }
+                }
+                recentMessage.setText(theRecentMessage);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }
