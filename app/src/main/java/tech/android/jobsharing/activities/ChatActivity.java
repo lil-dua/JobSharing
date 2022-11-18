@@ -3,11 +3,11 @@ package tech.android.jobsharing.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,17 +18,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
+import tech.android.jobsharing.adapter.ChatAdapter;
 import tech.android.jobsharing.databinding.ActivityChatBinding;
+import tech.android.jobsharing.models.ChatMessage;
 import tech.android.jobsharing.models.User;
 
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
-    private  FirebaseUser mUser;
+    private FirebaseUser mUser;
     private DatabaseReference databaseReference;
-    private String receiverUser;
+    private User receiverUser;
+    private String receiverId = null;
+    private ChatAdapter chatAdapter;
+    private List<ChatMessage> chatMessageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +53,23 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    private void init() {
+        chatMessageList = new ArrayList<>();
+
+    }
+
+
     private void getUserDetails() {
-        receiverUser = getIntent().getStringExtra("userId");
+        receiverId = getIntent().getStringExtra("userId");
         //get user details
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(receiverUser);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(receiverId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                    User user = snapshot.getValue(User.class);
                    binding.textName.setText(user.getName());
-
+                   readMessage(mUser.getUid(),receiverId,user.getImage());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -63,16 +77,42 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
+    private void readMessage(final String senderId, final String receiverId, final String receiverImage){
+        databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chatMessageList.clear();
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    ChatMessage chatMessage = dataSnapshot.getValue(ChatMessage.class);
+                    if(chatMessage.getReceiver().equals(senderId) && chatMessage.getSender().equals(receiverId)
+                            || chatMessage.getReceiver().equals(receiverId) && chatMessage.getSender().equals(senderId)){
+                        chatMessageList.add(chatMessage);
+                    }
+                    chatAdapter = new ChatAdapter(chatMessageList,getBitmapFromEncodedString(receiverImage));
+                    binding.chatRecycleView.setAdapter(chatAdapter);
+                    chatAdapter.notifyDataSetChanged();
 
-    private void init() {
+                }
+                binding.chatRecycleView.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
+
+
 
     private void setListeners() {
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> {
             String msg = binding.inputMessage.getText().toString();
             if (!msg.equals("")){
-                sendMessage(mUser.getUid(), receiverUser,msg);
+                sendMessage(mUser.getUid(), receiverId,msg);
             }else {
                 showToast("Empty message!");
             }
@@ -87,15 +127,14 @@ public class ChatActivity extends AppCompatActivity {
         hashMap.put("sender",sender);
         hashMap.put("receiver",receiver);
         hashMap.put("message",message);
+        hashMap.put("timestamp",new Date());
         hashMap.put("isSeen",false);
 
         databaseReference.child("Chats").push().setValue(hashMap);
-        final String msg = message;
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-               showToast("Message sent!");
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
