@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,7 +62,9 @@ public class ConversationsActivity extends AppCompatActivity {
                 users.clear();
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
                     User user = dataSnapshot.getValue(User.class);
-                    users.add(user);
+                    if(!user.getUserId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                        users.add(user);
+                    }
                 }
                 recentConversationAdapter.notifyDataSetChanged();
                 binding.conversationsRecycleView.setVisibility(View.VISIBLE);
