@@ -66,8 +66,9 @@
                         android:text="@string/post"
                         android:textColor="@color/primary_text"
                         android:layout_marginStart="@dimen/_54sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         app:layout_constraintStart_toEndOf="@id/imageProfile"
-                        app:layout_constraintBottom_toBottomOf="@id/imageProfile"/>
+                        app:layout_constraintBottom_toBottomOf="@id/imageProfile" />
                     <TextView
                         android:id="@+id/textFollower"
                         android:layout_width="wrap_content"
@@ -76,7 +77,7 @@
                         android:textColor="@color/primary_text"
                         android:layout_marginStart="@dimen/_24sdp"
                         app:layout_constraintStart_toEndOf="@id/textPost"
-                        app:layout_constraintBottom_toBottomOf="@id/imageProfile"/>
+                        app:layout_constraintBottom_toBottomOf="@id/textPost"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,7 +85,7 @@
                         android:textColor="@color/primary_text"
                         android:layout_marginStart="@dimen/_24sdp"
                         app:layout_constraintStart_toEndOf="@id/textFollower"
-                        app:layout_constraintBottom_toBottomOf="@id/imageProfile"/>
+                        app:layout_constraintBottom_toBottomOf="@id/textPost"/>
 
                     <TextView
                         android:id="@+id/numPost"
@@ -95,8 +96,10 @@
                         android:textColor="@color/primary_text"
                         android:layout_marginStart="@dimen/_62sdp"
                         android:layout_marginTop="@dimen/_34sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         app:layout_constraintStart_toEndOf="@id/imageProfile"
-                        app:layout_constraintTop_toTopOf="@id/imageProfile"/>
+                        app:layout_constraintTop_toTopOf="@id/imageProfile"
+                        app:layout_constraintBottom_toTopOf="@id/textPost"/>
                     <TextView
                         android:id="@+id/numFollower"
                         android:layout_width="wrap_content"
@@ -106,8 +109,10 @@
                         android:textColor="@color/primary_text"
                         android:layout_marginStart="@dimen/_40sdp"
                         android:layout_marginTop="@dimen/_34sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         app:layout_constraintStart_toEndOf="@id/textPost"
-                        app:layout_constraintTop_toTopOf="@id/imageProfile"/>
+                        app:layout_constraintTop_toTopOf="@id/imageProfile"
+                        app:layout_constraintBottom_toTopOf="@id/textPost"/>
                     <TextView
                         android:id="@+id/numFollowing"
                         android:layout_width="wrap_content"
@@ -117,8 +122,10 @@
                         android:textColor="@color/primary_text"
                         android:layout_marginStart="@dimen/_40sdp"
                         android:layout_marginTop="@dimen/_34sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         app:layout_constraintStart_toEndOf="@id/textFollower"
-                        app:layout_constraintTop_toTopOf="@id/imageProfile"/>
+                        app:layout_constraintTop_toTopOf="@id/imageProfile"
+                        app:layout_constraintBottom_toTopOf="@id/textPost"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                  <TextView
@@ -166,7 +173,7 @@
                     android:layout_gravity="center"
                     android:text="@string/edit_your_profile"
                     android:textStyle="bold"
-                    android:textColor="@color/secondary_text"
+                    android:textColor="@color/primary"
                     android:textSize="@dimen/_10ssp"/>
 
             </FrameLayout>

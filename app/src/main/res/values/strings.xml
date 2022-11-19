@@ -54,4 +54,9 @@
     <string name="online">Online</string>
     <string name="description">Description</string>
     <string name="link">Link</string>
+    <string name="change_your_avatar">Change your avatar</string>
+    <string name="username">Username</string>
+    <string name="edit_your_private_details">Edit your private details</string>
+    <string name="change_you_bio">Change you bio</string>
+    <string name="add_website">Add website</string>
 </resources>
