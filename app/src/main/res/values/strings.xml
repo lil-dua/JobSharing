@@ -52,4 +52,6 @@
     <string name="back_to">Back to</string>
     <string name="type_a_message">Type a message</string>
     <string name="online">Online</string>
+    <string name="description">Description</string>
+    <string name="link">Link</string>
 </resources>

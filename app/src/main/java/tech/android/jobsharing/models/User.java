@@ -7,15 +7,17 @@ import android.os.Parcelable;
  * Created by HoangRyan aka LilDua on 11/13/2022.
  */
 public class User implements Parcelable {
-    private String name, email, studentId, image, password,userId;
+    private String name, email, studentId,description,link, image, password,userId;
 
     public User(){
 
     }
-    public User(String name, String email, String studentId, String image, String password,String userId){
+    public User(String name, String email, String studentId,String description,String link, String image, String password,String userId){
         this.name = name;
         this.email = email;
         this.studentId = studentId;
+        this.description = description;
+        this.link = link;
         this.image = image;
         this.password = password;
         this.userId = userId;
@@ -79,6 +81,12 @@ public class User implements Parcelable {
     public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
+
+    public String getDescription(){return description;}
+    public void setDescription(String description){this.description = description;}
+
+    public String getLink(){return link;}
+    public void setLink(String link){this.link = link;}
 
     public String getImage() {
         return image;

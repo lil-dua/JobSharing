@@ -1,7 +1,10 @@
 package tech.android.jobsharing.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +15,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.activities.EditProfileActivity;
+import tech.android.jobsharing.activities.MainActivity;
 import tech.android.jobsharing.activities.SettingsActivity;
+import tech.android.jobsharing.activities.WebViewActivity;
+import tech.android.jobsharing.models.User;
 
 
 /***
@@ -25,7 +37,7 @@ import tech.android.jobsharing.activities.SettingsActivity;
 public class Fragment_Profile extends Fragment {
     View view;
     RoundedImageView imageProfile, imageEditProfile;
-    TextView txtName, txtDescription, numPost, numFollower, numFollowing;
+    TextView txtName, txtDescription,txtLink, numPost, numFollower, numFollowing;
     AppCompatImageView imgSetting;
     @Nullable
     @Override
@@ -33,6 +45,7 @@ public class Fragment_Profile extends Fragment {
         view = inflater.inflate(R.layout.fragment_profile,container,false);
         //Init
         init();
+        getUserDetails();
         //set event listeners
         setListeners();
         return view;
@@ -43,6 +56,7 @@ public class Fragment_Profile extends Fragment {
         imageEditProfile = view.findViewById(R.id.imageEditProfile);
         txtName = view.findViewById(R.id.txtUserName);
         txtDescription = view.findViewById(R.id.txtDescription);
+        txtLink = view.findViewById(R.id.txtLink);
         numPost =  view.findViewById(R.id.numPost);
         numFollower = view.findViewById(R.id.numFollower);
         numFollowing = view.findViewById(R.id.numFollowing);
@@ -55,6 +69,41 @@ public class Fragment_Profile extends Fragment {
         imageEditProfile.setOnClickListener(v -> startActivity(new Intent(getContext(), EditProfileActivity.class)));
 
     }
+
+    private void getUserDetails(){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        databaseReference.keepSynced(true);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final User user = snapshot.getValue(User.class);
+                imageProfile.setImageBitmap(getProfileImage(user.getImage()));
+                txtName.setText(user.getName());
+                txtDescription.setText(user.getDescription());
+                txtLink.setText(user.getLink());
+
+                //text link
+                txtLink.setOnClickListener(v -> {
+                    Intent intent = new Intent(getContext(),WebViewActivity.class);
+                    intent.putExtra("link","https://"+user.getLink());
+                    startActivity(intent);
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private Bitmap getProfileImage(String encodedImage){
+        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes,0, bytes.length);
+    }
+
 
 
 }
