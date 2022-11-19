@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import tech.android.jobsharing.databinding.ActivityEditProfileBinding;
 import tech.android.jobsharing.models.User;
@@ -62,47 +63,62 @@ public class EditProfileActivity extends AppCompatActivity {
         String description = binding.editTextDescription.getText().toString().trim();
         String link = binding.editTextLink.getText().toString().trim();
         String image = encodeImage;
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() != null) {
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    databaseReference.child("name").setValue(name);
+                    databaseReference.child("description").setValue(description);
+                    databaseReference.child("link").setValue(link);
+                    if (encodeImage != null) {
+                        databaseReference.child("image").setValue(image);
+                    }
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.child("image").setValue(image);
-                databaseReference.child("name").setValue(name);
-                databaseReference.child("description").setValue(description);
-                databaseReference.child("link").setValue(link);
+                    showToast("Profile update successfully!");
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }
 
-                showToast("Profile update successfully!");
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                finish();
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+                }
+            });
+        }else {
+            showToast("User id was not found!");
+        }
     }
     private void getUserDetails(){
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-        databaseReference.keepSynced(true);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                binding.imageProfile.setImageBitmap(getProfileImage(user.getImage()));
-                binding.editTextName.setText(user.getName());
-                binding.editTextDescription.setText(user.getDescription());
-                binding.editTextLink.setText(user.getLink());
-            }
+        if(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() != null) {
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+            databaseReference.keepSynced(true);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user = snapshot.getValue(User.class);
+                    binding.editTextDescription.setText(user.getDescription());
+                    binding.editTextLink.setText(user.getLink());
+                    //check null name
+                    if (user.getName() != null) {
+                        binding.editTextName.setText(user.getName());
+                    }
+                    //check null image
+                    if (user.getImage() != null) {
+                        binding.imageProfile.setImageBitmap(getProfileImage(user.getImage()));
+                    }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }else {
+            showToast("User id was not found!");
+        }
     }
     //Cancel dialog
     private void DialogCancel(){

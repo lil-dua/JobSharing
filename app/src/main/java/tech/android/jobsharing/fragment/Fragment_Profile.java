@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.Objects;
+
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.activities.EditProfileActivity;
-import tech.android.jobsharing.activities.MainActivity;
 import tech.android.jobsharing.activities.SettingsActivity;
 import tech.android.jobsharing.activities.WebViewActivity;
 import tech.android.jobsharing.models.User;
@@ -71,37 +73,53 @@ public class Fragment_Profile extends Fragment {
     }
 
     private void getUserDetails(){
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-        databaseReference.keepSynced(true);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                final User user = snapshot.getValue(User.class);
-                imageProfile.setImageBitmap(getProfileImage(user.getImage()));
-                txtName.setText(user.getName());
-                txtDescription.setText(user.getDescription());
-                txtLink.setText(user.getLink());
 
-                //text link
-                txtLink.setOnClickListener(v -> {
-                    Intent intent = new Intent(getContext(),WebViewActivity.class);
-                    intent.putExtra("link","https://"+user.getLink());
-                    startActivity(intent);
-                });
+        if(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() != null) {
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+            databaseReference.keepSynced(true);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    final User user = snapshot.getValue(User.class);
+                    txtDescription.setText(user.getDescription());
+                    txtLink.setText(user.getLink());
+                    //check null name
+                    if(user.getName() != null){
+                        txtName.setText(user.getName());
+                    }
+                    //check null image
+                    if (user.getImage() != null) {
+                        imageProfile.setImageBitmap(getProfileImage(user.getImage()));
+                    }
 
-            }
+                    //text link
+                    txtLink.setOnClickListener(v -> {
+                        Intent intent = new Intent(getContext(), WebViewActivity.class);
+                        intent.putExtra("link", "https://" + user.getLink());
+                        startActivity(intent);
+                    });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }else {
+            showToast("User id was not found!");
+        }
     }
 
     private Bitmap getProfileImage(String encodedImage){
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes,0, bytes.length);
+    }
+
+    //show Toast
+    private void showToast(String message){
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
 
