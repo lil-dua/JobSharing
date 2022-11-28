@@ -69,6 +69,8 @@ public class SignUpActivity extends AppCompatActivity {
         final String name = binding.inputName.getText().toString().trim();
         final String email = binding.inputEmail.getText().toString().trim();
         final String studentId = binding.inputStudentID.getText().toString().trim();
+        final String phone = binding.inputPhone.getText().toString().trim();
+        final String date = binding.inputDate.getText().toString().trim();
         final String description = binding.inputDescription.getText().toString().trim();
         final String link = binding.inputLink.getText().toString().trim();
         final String image = encodeImage;
@@ -78,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnSuccessListener(authResult -> {
                     loading(false);
                     String userId = mAuth.getCurrentUser().getUid();
-                    User user = new User(name,email,studentId,description,link,image,password,userId);
+                    User user = new User(name,email,studentId,phone,date,description,link,image,password,userId,null);
                     //put user to Realtime database
                     databaseReference.child("Users").child(userId).setValue(user)
                             .addOnSuccessListener(unused -> {
