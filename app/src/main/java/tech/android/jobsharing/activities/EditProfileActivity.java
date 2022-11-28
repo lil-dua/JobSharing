@@ -57,6 +57,8 @@ public class EditProfileActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             pickImage.launch(intent);
         });
+        //change private details
+        binding.textEditPrivate.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),EditPrivateDetailsActivity.class)));
     }
     private void updateUserDetails(){
         String name = binding.editTextName.getText().toString().trim();

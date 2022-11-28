@@ -36,9 +36,10 @@
         android:layout_height="wrap_content"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/primary"
-        app:tabIconTint="@color/primary"
-        app:tabTextColor="@color/primary"
-        android:background="@color/white"
+        app:tabIconTint="@color/secondary_text"
+        app:tabIndicatorColor="@color/primary"
+        app:tabBackground="@color/white"
+        app:tabTextColor="@color/secondary_text"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

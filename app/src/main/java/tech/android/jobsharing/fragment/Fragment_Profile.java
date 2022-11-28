@@ -8,6 +8,8 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,8 @@ public class Fragment_Profile extends Fragment {
     RoundedImageView imageProfile, imageEditProfile;
     TextView txtName, txtDescription,txtLink, numPost, numFollower, numFollowing;
     AppCompatImageView imgSetting;
+    FrameLayout frameNoPost;
+    ProgressBar progressBar;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +66,12 @@ public class Fragment_Profile extends Fragment {
         numPost =  view.findViewById(R.id.numPost);
         numFollower = view.findViewById(R.id.numFollower);
         numFollowing = view.findViewById(R.id.numFollowing);
+        frameNoPost = view.findViewById(R.id.frameNoPost);
+        progressBar = view.findViewById(R.id.progressBar);
+        frameNoPost.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+
+
     }
 
     private void setListeners() {

@@ -18,15 +18,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tech.android.jobsharing.adapter.ChatAdapter;
 import tech.android.jobsharing.databinding.ActivityChatBinding;
 import tech.android.jobsharing.models.ChatMessage;
 import tech.android.jobsharing.models.User;
+import tech.android.jobsharing.network.ApiClient;
+import tech.android.jobsharing.network.ApiService;
+import tech.android.jobsharing.utilities.Constants;
 
 
 public class ChatActivity extends AppCompatActivity {
@@ -37,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     private String receiverId = null;
     private ChatAdapter chatAdapter;
     private List<ChatMessage> chatMessageList;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +65,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void init() {
         chatMessageList = new ArrayList<>();
-
+        apiService = ApiClient.getClient().create(ApiService.class);
     }
 
 
@@ -77,6 +87,32 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
+
+    // send message
+    private void sendMessage(String sender, final String receiver, String message){
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("sender",sender);
+        hashMap.put("receiver",receiver);
+        hashMap.put("message",message);
+        hashMap.put("isSeen",false);
+
+        databaseReference.child("Chats").push().setValue(hashMap);
+        final String msg = message;
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    //read message
     private void readMessage(final String senderId, final String receiverId, final String receiverImage){
         databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -107,6 +143,9 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+
+
+
     private void setListeners() {
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> {
@@ -120,29 +159,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    // send message
-    private void sendMessage(String sender, final String receiver, String message){
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("sender",sender);
-        hashMap.put("receiver",receiver);
-        hashMap.put("message",message);
-        hashMap.put("timestamp",new Date());
-        hashMap.put("isSeen",false);
 
-        databaseReference.child("Chats").push().setValue(hashMap);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
     private void showToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
