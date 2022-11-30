@@ -160,20 +160,42 @@ public class Fragment_Newsfeed extends Fragment {
         progress.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         empty.setVisibility(View.GONE);
+//        getPostListNoData();
+
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+//        Query query = reference
+//                .child("Following")
+//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
+//                    Log.d(TAG, "onDataChange: found user: " +
+//                            singleSnapshot.child("userId").getValue());
+//
+//                    mFollowing.add(singleSnapshot.child("userId").getValue().toString());
+//                }
+//                mFollowing.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                getPostList();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
-                .child("Following")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                .child("Post");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
-                    Log.d(TAG, "onDataChange: found user: " +
-                            singleSnapshot.child("userId").getValue());
-
-                    mFollowing.add(singleSnapshot.child("userId").getValue().toString());
+                    DataSnapshot dataSnapshot1 = singleSnapshot.getChildren().iterator().next();
+                    mFollowing.add(dataSnapshot1.child("userId").getValue().toString());
                 }
-                mFollowing.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                mFollowing.add(dataSnapshot.getChildren().toString());
+
                 getPostList();
             }
 
@@ -240,7 +262,54 @@ public class Fragment_Newsfeed extends Fragment {
             });
         }
     }
+    private void getPostListNoData(){
+        Log.d(TAG, "getPhotos: getting photos");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+            Query query = reference
+                    .child("Post");
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getChildrenCount() == 0) {
+                        recyclerView.setVisibility(View.GONE);
+                        progress.setVisibility(View.GONE);
+                        empty.setVisibility(View.VISIBLE);
+                        return;
+                    }
+                    for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
+                        Post photo = new Post();
+                        Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
+                        photo.setCaption(objectMap.get("caption").toString());
+                        photo.setTags(objectMap.get("tags").toString());
+                        if (objectMap.get("post_id") != null)
+                            photo.setPhoto_id(objectMap.get("post_id").toString());
+                        if (objectMap.get("userId") != null)
+                            photo.setUser_id(objectMap.get("userId").toString());
+                        photo.setDate_Created(objectMap.get("date_Created").toString());
+                        if (objectMap.get("image_Path") != null)
+                            photo.setImage_Path(objectMap.get("image_Path").toString());
+                        ArrayList<Comments> comments = new ArrayList<Comments>();
+                        for (DataSnapshot dSnapshot : singleSnapshot
+                                .child("comments").getChildren()){
+                            Comments comment = new Comments();
+                            comment.setUser_id(dSnapshot.getValue(Comments.class).getUser_id());
+                            comment.setComment(dSnapshot.getValue(Comments.class).getComment());
+                            comment.setDate_created(dSnapshot.getValue(Comments.class).getDate_created());
+                            comments.add(comment);
+                        }
+                        photo.setComments(comments);
+                        mPost.add(photo);
+                    }
 
+                        displayPhotos();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+    }
     private void displayPhotos(){
         if(mPost != null){
             try{
