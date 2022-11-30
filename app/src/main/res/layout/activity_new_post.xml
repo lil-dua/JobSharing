@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white"/>
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageDone"
+        android:id="@+id/actNewPost_imvPost"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_6sdp"
@@ -43,43 +43,86 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/imageBack"/>
-    <FrameLayout
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/actNewPost_fabImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_add_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:tint="@color/white"
+        app:borderWidth="0dp"
+        android:backgroundTint="@color/primary" />
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_6sdp"
         android:background="@drawable/background_content_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/imageBack">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/conversationsRecycleView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:overScrollMode="never"
-            android:padding="@dimen/_20sdp"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_gravity="center"
-            android:indeterminateTint="@color/primary"/>
-
-        <TextView
-            android:id="@+id/textErrorMessage"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_24sdp"
-            android:layout_marginEnd="@dimen/_24sdp"
-            android:gravity="center"
-            android:textColor="@color/error"
-            android:textSize="@dimen/_12ssp"
-            android:visibility="gone"/>
-    </FrameLayout>
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/actNewPost_imvAvatar"
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_user_default"
+                app:layout_constraintTop_toTopOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:riv_oval="true" />
+            <TextView
+                android:id="@+id/actNewPost_tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:text="@string/app_name"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_14sdp"/>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/actNewPost_edtTag"
+            android:layout_width="match_parent"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_12sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:hint="Tag"
+            android:paddingVertical="@dimen/_4sdp"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/actNewPost_edtStatus"
+            android:layout_width="match_parent"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:hint="Write something"
+            android:paddingVertical="@dimen/_8sdp"
+            android:layout_height="wrap_content"/>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="@dimen/_10sdp"
+            android:id="@+id/actNewPOst_imvImage"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

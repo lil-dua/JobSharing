@@ -48,6 +48,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.0.2')
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-auth:'
+    implementation 'com.google.firebase:firebase-storage:20.1.0'
 
     // Scalable Size Uni (support for different screen sizes)
     implementation 'com.intuit.sdp:sdp-android:1.0.6'  //SDP - a scalable size unit for screen
@@ -59,4 +60,7 @@ dependencies {
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
+    //Universal image loader Module
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

@@ -1,39 +1,247 @@
 package tech.android.jobsharing.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.UUID;
+
+import tech.android.jobsharing.base.BaseActivity;
 import tech.android.jobsharing.databinding.ActivityNewPostBinding;
+import tech.android.jobsharing.models.User;
+import tech.android.jobsharing.utils.Methods;
 
-public class NewPostActivity extends AppCompatActivity {
-
+public class NewPostActivity extends BaseActivity {
+    private String encodeImage;
+    private String userId;
     private ActivityNewPostBinding binding;
+    private  Uri imageUri;
+    DatabaseReference databaseReference,data;
+    StorageReference storageReference,ref;
+    String RandomUId;
+    int PICK_IMAGE_REQUEST=1;
+    Methods method;
+    int count = 0;
+    String postCount;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //set binding
+    protected void initAction() {
+        binding.imageBack.setOnClickListener(v -> DialogCancel());
+        binding.actNewPostFabImage.setOnClickListener(v -> openFileChooser());
+        binding.actNewPostImvPost.setOnClickListener(v ->
+                        upLoadImage()
+                );
+    }
+
+    @Override
+    protected void initData() {
+        getUserDetails();
+        storageReference = FirebaseStorage.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        method = new Methods();
+        count = getCount();
+    }
+
+    @Override
+    protected void bindView() {
         binding = ActivityNewPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //set event listener
-        setListeners();
-    }
-    private void setListeners() {
-        binding.imageBack.setOnClickListener(v -> DialogCancel());
-        //done
-        binding.imageDone.setOnClickListener(v -> onBackPressed());
     }
 
+    private void getUserDetails(){
+        if(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() != null) {
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+            databaseReference.keepSynced(true);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user = snapshot.getValue(User.class);
+                    if (user.getName() != null) {
+                        binding.actNewPostTvName.setText(user.getName());
+                    }
+                    if (user.getImage() != null) {
+                        binding.actNewPostImvAvatar.setImageBitmap(getProfileImage(user.getImage()));
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }else {
+            showToast("User id was not found!");
+        }
+    }
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null){
+            imageUri = data.getData();
+            binding.actNewPOstImvImage.setImageURI(imageUri);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
     private void DialogCancel(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to remove this post?");
-        //Confirm:
         builder.setNegativeButton("Remove",(dialogInterface, i) -> onBackPressed());
-        //Stay:
         builder.setPositiveButton("Continue",(dialogInterface, i) -> {
-            //Stay
         });
         builder.show();
     }
+    private void upLoadImage() {
+        if (imageUri != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(NewPostActivity.this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+            String status = binding.actNewPostEdtStatus.getText().toString().trim();
+            String tags = binding.actNewPostEdtTag.getText().toString().trim();
+            RandomUId = UUID.randomUUID().toString();
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            ref = storageReference.child("photos/users/"+"/"+userId+"/photo"+(count+1));
+            ref.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            increasePostCount(count);
+                            addPost(status, getTimestamp(), String.valueOf(uri), RandomUId, userId, tags);
+                            progressDialog.dismiss();
+                            Toast.makeText(NewPostActivity.this, "Posted successfully", Toast.LENGTH_SHORT).show();
+                            onBackPressed();
+                            finish();
+                        }
+                    });
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(NewPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                    finish();
+
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                }
+            });
+
+        }else {
+            if (!binding.actNewPostEdtStatus.getText().toString().isEmpty()){
+                String status = binding.actNewPostEdtStatus.getText().toString().trim();
+                String tags = binding.actNewPostEdtTag.getText().toString().trim();
+                increasePostCount(count);
+                RandomUId = UUID.randomUUID().toString();
+                addPostNoImage(status, getTimestamp(), RandomUId, userId, tags);
+                onBackPressed();
+            }else {
+                showToast("Write something or add image");
+            }
+        }
+
+    }
+
+    //******************************FUNCTION TO ADD PHOTO TO FIREBASE STORAGE********
+    public void addPost(String caption, String date_Created, String image_Path, String post_id, String user_id, String tags){
+        HashMap<String, String> hashMappp = new HashMap<>();
+        hashMappp.put("caption", caption);
+        hashMappp.put("date_Created", date_Created);
+        hashMappp.put("image_Path", image_Path);
+        hashMappp.put("post_id", post_id);
+        hashMappp.put("tags", tags);
+        hashMappp.put("userId", user_id);
+        databaseReference.child("Post").child(user_id).child(post_id).setValue(hashMappp);
+        databaseReference.child("Photo").child(post_id).setValue(hashMappp);
+    }
+    public void addPostNoImage(String caption, String date_Created,String post_id, String user_id, String tags){
+        HashMap<String, String> hashMappp = new HashMap<>();
+        hashMappp.put("caption", caption);
+        hashMappp.put("date_Created", date_Created);
+        hashMappp.put("post_id", post_id);
+        hashMappp.put("tags", tags);
+        hashMappp.put("userId", user_id);
+        databaseReference.child("Post").child(user_id).child(post_id).setValue(hashMappp);
+    }
+
+
+    //******************************FUNCTION TO INCREASE POST COUNT********
+    public void increasePostCount(final int count){
+        data = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        data.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postCount = Integer.toString(count+1);
+                data.child("posts").setValue(postCount);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    private String getTimestamp(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
+        return sdf.format(new Date());
+    }
+    public int getCount() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                count = method.getImageCount(snapshot);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return count;
+    }
+
+
 }
