@@ -22,7 +22,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:riv_corner_radius="@dimen/_8sdp"
         app:tint="@color/white"/>
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fmHome_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_add"
+        app:tint="@color/white"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:borderWidth="0dp"
+        android:visibility="visible"
+        android:backgroundTint="@color/primary" />
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageChat"
         android:layout_width="@dimen/_30sdp"
@@ -53,7 +67,7 @@
         app:layout_constraintStart_toEndOf="@id/imageSignOut"
         app:layout_constraintTop_toTopOf="@id/imageSignOut"/>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_6sdp"
@@ -68,14 +82,45 @@
             android:clipToPadding="false"
             android:orientation="vertical"
             android:overScrollMode="never"
-            android:background="#E8E6E6"
+            android:visibility="gone"
             android:paddingBottom="@dimen/_24sdp"
             android:layout_marginTop="@dimen/_24sdp"
             tools:listitem="@layout/item_new_feed"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-
-    </FrameLayout>
+        <LinearLayout
+            android:id="@+id/fmHome_llEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/img_newsfeed_blank"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_newsfeed"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="@color/primary_text"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/fmHome_pbLoading"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:indeterminateTint="@color/primary"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

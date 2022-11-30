@@ -1,8 +1,10 @@
 package tech.android.jobsharing.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -35,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import tech.android.jobsharing.R;
+import tech.android.jobsharing.activities.CommentActivity;
 import tech.android.jobsharing.models.Comments;
 import tech.android.jobsharing.models.Likes;
 import tech.android.jobsharing.models.Post;
@@ -71,42 +74,39 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull NewFeedAdapter.ViewHolder holder, int position) {
         Post photo = objects.get(position);
+        if (position == 0)
+            holder.line.setVisibility(View.GONE);
         holder.heart = new Heart(holder.heartWhite, holder.heartRed);
         holder.photo = photo;
         holder.detector = new GestureDetector( holder.itemView.getContext(), new GestureListener(holder));
         holder.users = new StringBuilder();
         getCurrentUsername();
-
-        //get likes string
         getLikesString(holder);
-
-        //set the caption
-        holder.caption.setText(photo.getCaption());
-
-        //set Tags
-        holder.mTags.setText(photo.getTags());
-
-        //set the comment
+        if (photo.getTags() != null && !photo.getTags().isEmpty()){
+            holder.mTags.setText(photo.getTags());
+        } else {
+            holder.mTags.setVisibility(View.GONE);
+        }
+        if (photo.getCaption() != null && !photo.getCaption().isEmpty()){
+            holder.caption.setText(photo.getCaption());
+        } else {
+            holder.caption.setVisibility(View.GONE);
+        }
         final List<Comments> comments = photo.getComments();
         holder.comments.setText("View all " + comments.size() + " comments");
         holder.comments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Log.d(TAG, "onClick: loading comment thread for " + photo.getPhoto_id());
-//                Intent b = new Intent(mContext, ViewComments.class);
-//                //Create the bundle
-//                Bundle bundle = new Bundle();
-//                //Add your data from getFactualResults method to bundle
-//                bundle.putParcelable("Photo", photo);
-//                b.putExtra("commentcount",comments.size());
-//                //Add the bundle to the intent
-//                b.putExtras(bundle);
-//                mContext.startActivity(b);
+                Intent b = new Intent(mContext, CommentActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("Photo", photo);
+                b.putExtra("commentcount",comments.size());
+                b.putExtras(bundle);
+                mContext.startActivity(b);
 
             }
         });
 
-        //set the time it was posted
         String timestampDifference = getTimestampDifference(photo);
         if(!timestampDifference.equals("0")){
             holder.timeDetla.setText(timestampDifference + " DAYS AGO");
@@ -141,46 +141,26 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
                     holder.username.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d(TAG, "onClick: navigating to profile of: " +
-                                    holder.username);
 
-//                            Intent intent = new Intent(mContext, ProfileActivity.class);
-//                            intent.putExtra(mContext.getString(R.string.calling_activity),
-//                                    mContext.getString(R.string.home_activity));
-//                            intent.putExtra(mContext.getString(R.string.intent_user), holder.user);
-//                               mContext.startActivity(intent);
                         }
                     });
                     holder.avatar.setImageBitmap(getProfileImage(singleSnapshot.getValue(User.class).getImage()));
                     holder.avatar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d(TAG, "onClick: navigating to profile of: " +
-                                    holder.username);
 
-//                            Intent intent = new Intent(mContext, ProfileActivity.class);
-//                            intent.putExtra(mContext.getString(R.string.calling_activity),
-//                                    mContext.getString(R.string.home_activity));
-//                            intent.putExtra(mContext.getString(R.string.intent_user), holder.user);
-//                            mContext.startActivity(intent);
                         }
                     });
 
-
-
-//                    holder.settings = singleSnapshot.getValue(User.class);
                     holder.comment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            Intent b = new Intent(mContext, ViewComments.class);
-//                            //Create the bundle
-//                            Bundle bundle = new Bundle();
-//                            //Add your data from getFactualResults method to bundle
-//                            bundle.putParcelable("Photo", photo);
-//                            b.putExtra("commentcount",comments.size());
-//                            //Add the bundle to the intent
-//                            b.putExtras(bundle);
-//                            mContext.startActivity(b);
+                            Intent b = new Intent(mContext, CommentActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("Photo", photo);
+                            b.putExtra("commentcount",comments.size());
+                            b.putExtras(bundle);
+                            mContext.startActivity(b);
                         }
                     });
                 }
@@ -219,9 +199,11 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
         Heart heart;
         GestureDetector detector;
         Post photo;
+        View line;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             username = (TextView) itemView.findViewById(R.id.itNewFeed_tvName);
+            line = (View) itemView.findViewById(R.id.itNewFeed_line);
             image = (RoundedImageView) itemView.findViewById(R.id.itNewFeed_imvPostImage);
             heartRed = (ImageView) itemView.findViewById(R.id.itNewFeed_imvHeartRed);
             heartWhite = (ImageView) itemView.findViewById(R.id.itNewFeed_imvHeart);
@@ -254,25 +236,16 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
             Query query = reference
                     .child("Post")
                     .child(mHolder.photo.getUser_id())
+                    .child(mHolder.photo.getPhoto_id())
                     .child("likes");
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
-
                         String keyID = singleSnapshot.getKey();
-
-                        //case1: Then user already liked the photo
                         if(mHolder.likeByCurrentUser &&
                                 singleSnapshot.getValue(Likes.class).getUser_id()
                                         .equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-
-                            mReference.child("Photo")
-                                    .child(mHolder.photo.getPhoto_id())
-                                    .child("likes")
-                                    .child(keyID)
-                                    .removeValue();
-///
                             mReference.child("Post")
                                     .child(mHolder.photo.getUser_id())
                                     .child(mHolder.photo.getPhoto_id())
@@ -283,15 +256,12 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
                             mHolder.heart.toggleLike();
                             getLikesString(mHolder);
                         }
-                        //case2: The user has not liked the photo
                         else if(!mHolder.likeByCurrentUser){
-                            //add new like
                             addNewLike(mHolder);
                             break;
                         }
                     }
                     if(!dataSnapshot.exists()){
-                        //add new like
                         addNewLike(mHolder);
                     }
                 }
@@ -307,18 +277,10 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
     }
     private void addNewLike(final ViewHolder holder){
         Log.d(TAG, "addNewLike: adding new like");
-
         String newLikeID = mReference.push().getKey();
         Likes like = new Likes();
         like.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-        mReference.child("Photo")
-                .child(holder.photo.getPhoto_id())
-                .child("likes")
-                .child(newLikeID)
-                .setValue(like);
-
-        mReference.child("User_Photo")
+        mReference.child("Post")
                 .child(holder.photo.getUser_id())
                 .child(holder.photo.getPhoto_id())
                 .child("likes")
@@ -355,12 +317,11 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
         });
     }
     private void getLikesString(final ViewHolder holder){
-        Log.d(TAG, "getLikesString: getting likes string");
-
         try{
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
             Query query = reference
-                    .child("Photo")
+                    .child("Post")
+                    .child(holder.photo.getUser_id())
                     .child(holder.photo.getPhoto_id())
                     .child("likes");
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -502,7 +463,6 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
     }
     private String getTimestampDifference(Post photo){
         Log.d(TAG, "getTimestampDifference: getting timestamp difference.");
-
         String difference = "";
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -3,6 +3,7 @@ package tech.android.jobsharing.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -30,9 +31,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-        floatingActionButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),NewPostActivity.class)));
-    }
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+    }
     private void init() {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager2);

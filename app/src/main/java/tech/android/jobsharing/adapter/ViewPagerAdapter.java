@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import tech.android.jobsharing.fragment.Fragment_Home;
+import tech.android.jobsharing.fragment.Fragment_Newsfeed;
 import tech.android.jobsharing.fragment.Fragment_Notification;
 import tech.android.jobsharing.fragment.Fragment_Profile;
 import tech.android.jobsharing.fragment.Fragment_Search;
@@ -32,7 +32,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new Fragment_Notification();
             case 0:
             default:
-                return new Fragment_Home();
+                return new Fragment_Newsfeed();
         }
     }
 

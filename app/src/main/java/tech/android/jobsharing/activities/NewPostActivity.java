@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -121,10 +122,20 @@ public class NewPostActivity extends BaseActivity {
     private void DialogCancel(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to remove this post?");
-        builder.setNegativeButton("Remove",(dialogInterface, i) -> onBackPressed());
+        builder.setNegativeButton("Remove",(dialogInterface, i) ->
+                setResultOk()
+        );
         builder.setPositiveButton("Continue",(dialogInterface, i) -> {
         });
         builder.show();
+    }
+    private void setResultOk(){
+        setResult(Activity.RESULT_OK,new Intent());
+        finish();
+    }
+    private void setResultCancel(){
+        setResult(Activity.RESULT_CANCELED,new Intent());
+        finish();
     }
     private void upLoadImage() {
         if (imageUri != null) {
@@ -146,8 +157,7 @@ public class NewPostActivity extends BaseActivity {
                             addPost(status, getTimestamp(), String.valueOf(uri), RandomUId, userId, tags);
                             progressDialog.dismiss();
                             Toast.makeText(NewPostActivity.this, "Posted successfully", Toast.LENGTH_SHORT).show();
-                            onBackPressed();
-                            finish();
+                            setResultOk();
                         }
                     });
 
@@ -157,8 +167,7 @@ public class NewPostActivity extends BaseActivity {
                 public void onFailure(@NonNull Exception e) {
                     progressDialog.dismiss();
                     Toast.makeText(NewPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    onBackPressed();
-                    finish();
+                    setResultCancel();
 
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -177,7 +186,7 @@ public class NewPostActivity extends BaseActivity {
                 increasePostCount(count);
                 RandomUId = UUID.randomUUID().toString();
                 addPostNoImage(status, getTimestamp(), RandomUId, userId, tags);
-                onBackPressed();
+                setResultOk();
             }else {
                 showToast("Write something or add image");
             }
@@ -195,7 +204,6 @@ public class NewPostActivity extends BaseActivity {
         hashMappp.put("tags", tags);
         hashMappp.put("userId", user_id);
         databaseReference.child("Post").child(user_id).child(post_id).setValue(hashMappp);
-        databaseReference.child("Photo").child(post_id).setValue(hashMappp);
     }
     public void addPostNoImage(String caption, String date_Created,String post_id, String user_id, String tags){
         HashMap<String, String> hashMappp = new HashMap<>();
@@ -205,6 +213,7 @@ public class NewPostActivity extends BaseActivity {
         hashMappp.put("tags", tags);
         hashMappp.put("userId", user_id);
         databaseReference.child("Post").child(user_id).child(post_id).setValue(hashMappp);
+
     }
 
 
@@ -224,11 +233,7 @@ public class NewPostActivity extends BaseActivity {
         });
 
     }
-    private String getTimestamp(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
-        return sdf.format(new Date());
-    }
+
     public int getCount() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -243,5 +248,8 @@ public class NewPostActivity extends BaseActivity {
         return count;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

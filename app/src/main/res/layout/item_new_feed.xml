@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="#E8E6E6"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_8sdp"
+        android:id="@+id/itNewFeed_line"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_marginBottom="@dimen/_6sdp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_6sdp"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="@dimen/_12sdp"
                 android:orientation="horizontal">
 
                 <com.makeramen.roundedimageview.RoundedImageView
@@ -77,6 +82,7 @@
                 android:text="Caption"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/_12sdp" />
+
             <TextView
                 android:id="@+id/itNewFeed_tvTag"
                 android:layout_width="wrap_content"
@@ -84,17 +90,21 @@
                 android:text="Tags"
                 android:textColor="#3648AC"
                 android:textSize="13sp" />
+
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/itNewFeed_imvPostImage"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 app:riv_corner_radius="@dimen/_10sdp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/_6sdp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_6sdp">
+
                 <TextView
                     android:id="@+id/itNewFeed_tvLike"
                     android:layout_width="wrap_content"
@@ -102,26 +112,29 @@
                     android:text="Likes"
                     android:textColor="@color/secondary_text"
                     android:textSize="13sp" />
+
                 <TextView
                     android:id="@+id/itNewFeed_tvUserComment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
-                    android:text="Comments"
                     android:gravity="end"
+                    android:text="Comments"
                     android:textColor="@color/secondary_text"
                     android:textSize="13sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#E8E6E6"/>
+                android:background="#E8E6E6" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_24sdp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_24sdp">
 
                 <RelativeLayout
                     android:id="@+id/itNewFeed_rlHeart"
@@ -134,8 +147,8 @@
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/heart"
                         android:padding="@dimen/_5sdp"
+                        android:src="@drawable/heart"
                         android:visibility="visible" />
 
                     <ImageView
@@ -152,20 +165,20 @@
                     android:id="@+id/itNewFeed_imvComment"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_comments"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintRight_toRightOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/itNewFeed_imvSend"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/ic_send_new"
                     android:padding="@dimen/_5sdp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
+                    android:src="@drawable/ic_send_new"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -193,4 +206,4 @@
     <!--        android:layout_centerInParent="true"/>-->
 
 
-</RelativeLayout>
+</LinearLayout>
