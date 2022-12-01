@@ -65,13 +65,15 @@
                 </LinearLayout>
 
 
-                <ImageView
+                <TextView
                     android:id="@+id/itNewFeed_imvOptions"
-                    android:layout_width="20dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_menu"
-                    app:tint="@color/primary_text" />
+                    android:text="+ Follow"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/blue_link"/>
             </LinearLayout>
 
             <TextView
@@ -87,8 +89,9 @@
                 android:id="@+id/itNewFeed_tvTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
                 android:text="Tags"
-                android:textColor="#3648AC"
+                android:textColor="@color/blue_link"
                 android:textSize="13sp" />
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -144,8 +147,8 @@
 
                     <ImageView
                         android:id="@+id/itNewFeed_imvHeart"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
                         android:layout_centerInParent="true"
                         android:padding="@dimen/_5sdp"
                         android:src="@drawable/heart"
@@ -153,8 +156,8 @@
 
                     <ImageView
                         android:id="@+id/itNewFeed_imvHeartRed"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
                         android:layout_centerInParent="true"
                         android:padding="@dimen/_5sdp"
                         android:src="@drawable/ic_red_heart"
@@ -163,8 +166,8 @@
 
                 <ImageView
                     android:id="@+id/itNewFeed_imvComment"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
                     android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_comments"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -173,8 +176,8 @@
 
                 <ImageView
                     android:id="@+id/itNewFeed_imvSend"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
                     android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_send_new"
                     app:layout_constraintRight_toRightOf="parent"

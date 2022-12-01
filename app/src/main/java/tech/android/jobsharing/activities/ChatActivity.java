@@ -18,24 +18,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import tech.android.jobsharing.adapter.ChatAdapter;
 import tech.android.jobsharing.databinding.ActivityChatBinding;
 import tech.android.jobsharing.models.ChatMessage;
 import tech.android.jobsharing.models.User;
 import tech.android.jobsharing.network.ApiClient;
 import tech.android.jobsharing.network.ApiService;
-import tech.android.jobsharing.utilities.Constants;
 
 
 public class ChatActivity extends AppCompatActivity {

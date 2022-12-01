@@ -49,6 +49,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-auth:'
     implementation 'com.google.firebase:firebase-storage:20.1.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.5' // add firebase messaging
+
 
     // Scalable Size Uni (support for different screen sizes)
     implementation 'com.intuit.sdp:sdp-android:1.0.6'  //SDP - a scalable size unit for screen
