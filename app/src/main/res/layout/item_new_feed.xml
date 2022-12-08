@@ -32,6 +32,7 @@
                     android:layout_width="@dimen/_36sdp"
                     android:layout_height="@dimen/_36sdp"
                     android:layout_gravity="center_vertical"
+                    android:padding="@dimen/_3sdp"
                     android:scaleType="centerCrop"
                     app:riv_oval="true" />
 
@@ -70,17 +71,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/_12sdp"
                     android:text="+ Follow"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/blue_link"/>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E8E6E6" />
+
             <TextView
                 android:id="@+id/itNewFeed_tvStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:text="Caption"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/_12sdp" />
@@ -110,9 +117,11 @@
 
                 <TextView
                     android:id="@+id/itNewFeed_tvLike"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_150sdp"
                     android:layout_height="wrap_content"
-                    android:text="Likes"
+                    android:text="@string/likes"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textColor="@color/secondary_text"
                     android:textSize="13sp" />
 
@@ -123,7 +132,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:gravity="end"
-                    android:text="Comments"
+                    android:text="@string/comments"
                     android:textColor="@color/secondary_text"
                     android:textSize="13sp" />
             </LinearLayout>

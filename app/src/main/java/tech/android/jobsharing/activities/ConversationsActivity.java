@@ -1,12 +1,14 @@
 package tech.android.jobsharing.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tech.android.jobsharing.adapter.RecentConversationAdapter;
+import tech.android.jobsharing.adapter.SearchUserAdapter;
 import tech.android.jobsharing.databinding.ActivityConversationsBinding;
 import tech.android.jobsharing.models.User;
 
@@ -25,6 +28,7 @@ public class ConversationsActivity extends AppCompatActivity {
 
     private ActivityConversationsBinding binding;
     private RecentConversationAdapter recentConversationAdapter;
+    private SearchUserAdapter searchUserAdapter;
     private List<User> users;
 
     @Override
@@ -43,11 +47,13 @@ public class ConversationsActivity extends AppCompatActivity {
         users = new ArrayList<>();
         recentConversationAdapter = new RecentConversationAdapter(getApplicationContext(),users);
         binding.conversationsRecycleView.setAdapter(recentConversationAdapter);
-
     }
 
     private void setListeners() {
         binding.imageBack.setOnClickListener(v -> onBackPressed());
+        binding.imageSearchUser.setOnClickListener(v -> {
+            processSearch(binding.editTextSearchUser.getText().toString());
+        });
     }
     //show Toast
     private void showToast(String message){
@@ -76,6 +82,17 @@ public class ConversationsActivity extends AppCompatActivity {
                 showToast("Get list user failed!");
             }
         });
+    }
+
+    //search user list
+    private void processSearch(String s){
+        FirebaseRecyclerOptions<User> options =
+                new FirebaseRecyclerOptions.Builder<User>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("name").startAt(s).endAt(s+"\uf8ff"), User.class)
+                        .build();
+        searchUserAdapter = new SearchUserAdapter(getApplicationContext(),options);
+        searchUserAdapter.startListening();
+        binding.conversationsRecycleView.setAdapter(searchUserAdapter);
     }
 
 

@@ -66,4 +66,6 @@
     <string name="job_sharing">JOB SHARING</string>
     <string name="no_comment">No comment</string>
     <string name="no_newsfeed">No Newsfeed</string>
+    <string name="likes">Likes</string>
+    <string name="comments">Comments</string>
 </resources>
