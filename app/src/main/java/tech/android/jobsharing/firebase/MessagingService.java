@@ -16,7 +16,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
 
 import tech.android.jobsharing.R;
-import tech.android.jobsharing.activities.ChatActivity;
+import tech.android.jobsharing.activities.ConversationsActivity;
 import tech.android.jobsharing.models.User;
 
 /***
@@ -40,9 +40,8 @@ public class MessagingService extends FirebaseMessagingService{
         int notificationId = new Random().nextInt();
         String channelId = "chat_message";
 
-        Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, ConversationsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("user",user);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,channelId);
