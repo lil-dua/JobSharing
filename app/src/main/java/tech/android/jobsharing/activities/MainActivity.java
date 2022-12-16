@@ -1,12 +1,11 @@
 package tech.android.jobsharing.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.child("token").setValue(token);
+                databaseReference.child("fcmToken").setValue(token);
             }
 
             @Override

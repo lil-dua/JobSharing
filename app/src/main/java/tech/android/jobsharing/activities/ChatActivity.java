@@ -1,14 +1,14 @@
 package tech.android.jobsharing.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,24 +18,31 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tech.android.jobsharing.adapter.ChatAdapter;
 import tech.android.jobsharing.databinding.ActivityChatBinding;
 import tech.android.jobsharing.models.ChatMessage;
 import tech.android.jobsharing.models.User;
 import tech.android.jobsharing.network.ApiClient;
 import tech.android.jobsharing.network.ApiService;
+import tech.android.jobsharing.utils.Constant;
 
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
     private FirebaseUser mUser;
     private DatabaseReference databaseReference;
-    private User receiverUser;
+    private String receiverFcmToken;
     private String receiverId = null;
     private ChatAdapter chatAdapter;
     private List<ChatMessage> chatMessageList;
@@ -72,6 +79,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                    User user = snapshot.getValue(User.class);
                    binding.textName.setText(user.getName());
+                   receiverFcmToken = user.getFcmToken();
                    readMessage(mUser.getUid(),receiverId,user.getImage());
             }
             @Override
@@ -81,6 +89,20 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    private void setListeners() {
+        binding.imageBack.setOnClickListener(v -> onBackPressed());
+        binding.layoutSend.setOnClickListener(v -> {
+            String msg = binding.inputMessage.getText().toString();
+            if (!msg.equals("")){
+                sendMessage(mUser.getUid(), receiverId,msg);
+            }else {
+                showToast("Empty message!");
+            }
+            binding.inputMessage.setText("");
+        });
+    }
+
+
     // send message
     private void sendMessage(String sender, final String receiver, String message){
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -88,15 +110,35 @@ public class ChatActivity extends AppCompatActivity {
         hashMap.put("sender",sender);
         hashMap.put("receiver",receiver);
         hashMap.put("message",message);
-        hashMap.put("isSeen",false);
-
         databaseReference.child("Chats").push().setValue(hashMap);
+
         final String msg = message;
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
 
+                //push notification
+                try {
+                    JSONArray tokens = new JSONArray();
+                    tokens.put(receiverFcmToken);
+
+                    JSONObject data = new JSONObject();
+                    data.put("userId",user.getUserId());
+                    data.put("name",user.getName());
+                    data.put("fcmToken",user.getFcmToken());
+                    data.put("message",msg);
+
+                    JSONObject body = new JSONObject();
+                    body.put("data",data);
+                    body.put("registration_ids",tokens);
+
+                    sendNotification(body.toString());
+                    showToast("Sent notification successfully!");
+                }catch (Exception exception){
+                    showToast("JSON:"+exception.getMessage());
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -136,22 +178,38 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+    //send notification
+    private void sendNotification(String messageBody){
+        ApiClient.getClient().create(ApiService.class).sendMessage(
+                Constant.getRemoteMsgHeaders(),
+                messageBody
+        ).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()){
+                    try {
+                        if(response.body() != null){
+                            JSONObject responseJson = new JSONObject(response.body());
+                            JSONArray results = responseJson.getJSONArray("results");
+                            if(responseJson.getInt("failure") == 1){
+                                JSONObject error = (JSONObject) results.get(0);
+                                showToast(error.getString("error"));
+                                return;
+                            }
+                        }
 
-
-
-    private void setListeners() {
-        binding.imageBack.setOnClickListener(v -> onBackPressed());
-        binding.layoutSend.setOnClickListener(v -> {
-            String msg = binding.inputMessage.getText().toString();
-            if (!msg.equals("")){
-                sendMessage(mUser.getUid(), receiverId,msg);
-            }else {
-                showToast("Empty message!");
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }
             }
-            binding.inputMessage.setText("");
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                showToast(t.getMessage());
+            }
         });
     }
-
 
 
     private void showToast(String message){

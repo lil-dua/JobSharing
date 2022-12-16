@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="1dp"
+    android:backgroundTint="@color/gray_050">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp" >
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iconCompany"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            app:riv_corner_radius="10dp"
+            android:src="@drawable/ic_company"
+            android:background="@drawable/bg_photo_item"/>
+
+        <TextView
+            android:id="@+id/textJobName"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/iconCompany"
+            android:layout_width="match_parent"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"
+            android:textSize="@dimen/_11ssp"
+            />
+        <TextView
+            android:id="@+id/textCompanyName"
+            android:layout_below="@id/textJobName"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="130dp"
+            android:layout_width="match_parent"
+            android:layout_toEndOf="@id/iconCompany"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/_9ssp"
+            android:textColor="@color/primary"
+            android:ellipsize="end"
+            android:background="@drawable/bg_strip_round"/>
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

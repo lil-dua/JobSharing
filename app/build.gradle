@@ -50,7 +50,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:'
     implementation 'com.google.firebase:firebase-storage:20.1.0'
     implementation 'com.google.firebase:firebase-messaging:23.0.5' // add firebase messaging
-
+    implementation 'com.firebaseui:firebase-ui-database:8.0.2'
 
     // Scalable Size Uni (support for different screen sizes)
     implementation 'com.intuit.sdp:sdp-android:1.0.6'  //SDP - a scalable size unit for screen
@@ -58,6 +58,7 @@ dependencies {
 
     // Rounded ImageView
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

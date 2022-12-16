@@ -109,9 +109,9 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
 
         String timestampDifference = getTimestampDifference(photo);
         if(!timestampDifference.equals("0")){
-            holder.timeDetla.setText(timestampDifference + " DAYS AGO");
+            holder.timeDetla.setText(timestampDifference + " days ago");
         }else{
-            holder.timeDetla.setText("TODAY");
+            holder.timeDetla.setText("Today");
         }
 
         //set the profile image

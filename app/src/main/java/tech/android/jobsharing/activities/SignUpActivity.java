@@ -1,9 +1,5 @@
 package tech.android.jobsharing.activities;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +10,10 @@ import android.util.Base64;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -80,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnSuccessListener(authResult -> {
                     loading(false);
                     String userId = mAuth.getCurrentUser().getUid();
-                    User user = new User(name,email,studentId,phone,date,description,link,image,password,userId,null);
+                    User user = new User(name,email,studentId,phone,date,description,link,image,password,userId,"");
                     //put user to Realtime database
                     databaseReference.child("Users").child(userId).setValue(user)
                             .addOnSuccessListener(unused -> {
