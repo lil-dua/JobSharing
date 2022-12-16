@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tech.android.jobsharing.R;
-import tech.android.jobsharing.adapter.RecommendJobAdapter;
-import tech.android.jobsharing.adapter.SearchJobAdapter;
 import tech.android.jobsharing.models.Post;
 import tech.android.jobsharing.models.User;
 
@@ -48,8 +46,6 @@ public class Fragment_Search extends Fragment {
     private int mResults;
     private List<Post> mPaginatedPhotos;
 
-    private RecommendJobAdapter recommendJobAdapter;
-    private SearchJobAdapter searchJobAdapter;
     FirebaseAuth mAuth;
 
     @Nullable
@@ -58,7 +54,7 @@ public class Fragment_Search extends Fragment {
         view = inflater.inflate(R.layout.fragment_search,container,false);
         init();
 //        getJobDetail();
-        getListJob();
+//        getListJob();
         setListeners();
         return view;
     }
@@ -77,7 +73,7 @@ public class Fragment_Search extends Fragment {
 
     private void setListeners() {
         imgSearch.setOnClickListener(v -> {
-            processSearch(edtSearch.getText().toString());
+//            processSearch(edtSearch.getText().toString());
         });
     }
 
@@ -87,9 +83,6 @@ public class Fragment_Search extends Fragment {
                 new FirebaseRecyclerOptions.Builder<Post>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("Post").orderByChild("userId").startAt(s).endAt(s+"\uf8ff"), Post.class)
                         .build();
-        searchJobAdapter = new SearchJobAdapter(getContext(),options);
-        searchJobAdapter.startListening();
-        jobsRecycleView.setAdapter(searchJobAdapter);
     }
 
     private void getJobDetail(){
@@ -105,9 +98,9 @@ public class Fragment_Search extends Fragment {
 
                 }
                 jobsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recommendJobAdapter = new RecommendJobAdapter(getActivity(),userList);
-                recommendJobAdapter.notifyDataSetChanged();
-                jobsRecycleView.setAdapter(recommendJobAdapter);
+//                recommendJobAdapter = new RecommendJobAdapter(getActivity(),userList);
+//                recommendJobAdapter.notifyDataSetChanged();
+//                jobsRecycleView.setAdapter(recommendJobAdapter);
             }
 
             @Override
@@ -122,8 +115,8 @@ public class Fragment_Search extends Fragment {
                 new FirebaseRecyclerOptions.Builder<Post>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("Post"), Post.class)
                         .build();
-        searchJobAdapter = new SearchJobAdapter(getContext(),options);
-        jobsRecycleView.setAdapter(searchJobAdapter);
+//        searchJobAdapter = new SearchJobAdapter(getContext(),options);
+//        jobsRecycleView.setAdapter(searchJobAdapter);
     }
 
     //show Toast
