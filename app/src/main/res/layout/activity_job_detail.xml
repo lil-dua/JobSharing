@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context=".activities.NewPostActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/primary"
+        android:id="@+id/actJobDetail_llHeader">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageBack"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginVertical="@dimen/_6sdp"
+            android:background="@drawable/background_icon"
+            android:padding="@dimen/_6sdp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white"/>
+
+        <TextView
+            android:id="@+id/actJobDetail_tvContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_12sdp"
+            android:padding="@dimen/_4sdp"
+            android:text="@string/contact"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_60sdp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/actJobDetail_llHeader">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/imageBack">
+            <TextView
+                android:id="@+id/actJobDetail_tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HCMC -  Java Developer"
+                android:textSize="@dimen/_17sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:textColor="@color/primary_text"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp">
+                <ImageView
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:src="@drawable/ic_company_default"
+                    android:id="@+id/actJobDetail_imvCompany"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/actJobDetail_tvCompany"
+                        android:text="ABI Company"
+                        android:layout_marginStart="@dimen/_8sdp"
+
+
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/actJobDetail_tvLocation"
+                        android:text="Ha Noi, Viet Nam"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/actJob_tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="13 day ago"
+                    />
+
+                <TextView
+                    android:id="@+id/actJob_tvApplication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:textColor="@color/green"
+                    android:text="1 application"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@drawable/ic_job"/>
+                <TextView
+                    android:id="@+id/actJobDetail_tvJobType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:text="Full time"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@drawable/ic_baseline_home_work_24"/>
+                <TextView
+                    android:id="@+id/actJobDetail_tvWorkplace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:text="On-site"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#E8E6E6"
+                android:layout_marginVertical="@dimen/_12sdp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/meet_the_hiring_team"
+                android:textSize="@dimen/_14sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:textColor="@color/primary_text"/>
+            <LinearLayout
+                android:id="@+id/actJobDetail_llPoster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:orientation="horizontal">
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/actJobDetail_imvAvata"
+                    android:scaleType="centerCrop"
+                    app:riv_oval="true"
+                    android:src="@drawable/ic_user_default"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nguyen Van A"
+                        android:textColor="@color/primary_text"
+                        android:textStyle="bold"
+                        android:id="@+id/actJobDetail_tvUser"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="I hiring for android developer"
+                        android:id="@+id/actJobDetail_tvUserDes"/>
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#E8E6E6"
+                android:layout_marginVertical="@dimen/_12sdp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/job_description"
+                android:textSize="@dimen/_14sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:textColor="@color/primary_text"/>
+            <TextView
+                android:id="@+id/actJobDetail_tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mô tả công việc
+Lập trình ứng dụng trên nền tảng Android (Kotlin)
+Nghiên cứu giải pháp và triển khai giải pháp theo yêu cầu của từng sản phẩm
+Báo cáo tiến độ và tình trạng công việc trực tiếp tới quản lý dự án
+Các công việc hỗ trợ khác khi có yêu cầu
+Yêu cầu ứng viên
+Sinh viên sắp hoặc đã tốt nghiệp Đại học chuyên ngành Công nghệ thông tin
+Không yêu cầu kinh nghiệm
+Có thể làm Fulltime, gắn bó lâu dài
+Có kiến thức về cấu trúc dữ liệu, giải thuật và lập trình hướng đối tượng (OOP)
+Từng tham gia các dự án hay các project cá nhân về Android hay có kinh nghiệm làm về ứng dụng, game đã được phát hành trên Google Play là một lợi thế
+Tư duy logic tốt, cẩn thận, giao tiếp tốt
+Có đam mê với lập trình, chủ động, sẵn sàng học hỏi và có thể học hỏi nhanh
+Quyền lợi
+Hỗ trợ lương từ 2.5 - 5 triệu/tháng (offer theo năng lực)
+Cơ hội trở thành nhân viên chính thức sau 2 tháng thực tập với mức lương thưởng hấp dẫn
+Được đào tạo bởi leader dày dặn kinh nghiệm, nâng cao chuyên môn và có định hướng công việc rõ ràng cho bản thân
+Quy trình đào tạo bài bản để trở thành Lập trình viên Android, được học hỏi về xử lý bất đồng bộ (Asynctask, RxAndroid, RxKotlin), design pattern MVVM, làm việc với RESTful Api, Firebase,…
+Trực tiếp tham gia dự án lớn thực tế và trải nghiệm với các xu hướng mới một cách nhanh chóng nhất
+Trải nghiệm một môi trường tuyệt vời, văn hóa trẻ trung thoải mái
+Tham gia các hoạt động ăn chơi hàng ngày, các hoạt động thể thao hàng tuần cùng công ty
+Cách thức ứng tuyển"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:textColor="@color/primary_text"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

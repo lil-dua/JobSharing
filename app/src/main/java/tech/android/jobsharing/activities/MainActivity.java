@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private void setup() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager2.setAdapter(viewPagerAdapter);
-        //set up for Tab Layout
+        //set up for Tab Layot
         new TabLayoutMediator(tabLayout,viewPager2,((tab, position) -> {
             switch (position){
                 case 0:
@@ -78,8 +78,14 @@ public class MainActivity extends AppCompatActivity {
                     // fragment notification
                     tab.setIcon(R.drawable.ic_notifications);
                     break;
+                case 4:
+                    // fragment notification
+                    tab.setIcon(R.drawable.ic_job);
+                    break;
             }
         })).attach();
+        viewPager2.setOffscreenPageLimit(5);
+
     }
 
     private void getToken(){

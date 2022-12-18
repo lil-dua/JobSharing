@@ -42,8 +42,20 @@ public class MessagingService extends FirebaseMessagingService{
 
         Intent intent = new Intent(this, ConversationsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
-
+        PendingIntent pendingIntent ;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getActivity(
+                    this, 0,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
+            );
+        } else {
+            pendingIntent = PendingIntent.getActivity(
+                    this, 0,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            );
+        }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,channelId);
         builder.setSmallIcon(R.drawable.ic_notifications);
         builder.setContentTitle(user.getName());

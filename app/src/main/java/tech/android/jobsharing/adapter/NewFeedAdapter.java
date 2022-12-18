@@ -38,6 +38,7 @@ import java.util.List;
 
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.activities.CommentActivity;
+import tech.android.jobsharing.activities.ProfileViewerActivity;
 import tech.android.jobsharing.models.Comments;
 import tech.android.jobsharing.models.Likes;
 import tech.android.jobsharing.models.Post;
@@ -51,8 +52,12 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
     }
 
     private String TAG = "NewFeedAdapter";
+    private Boolean isGoneFollow = false;
     public interface OnLoadMoreItemsListener{
         void onLoadMoreItems();
+    }
+    public void setGoneFollow(Boolean b){
+        this.isGoneFollow = b;
     }
     OnLoadMoreItemsListener mOnLoadMoreItemsListener;
     private LayoutInflater mInflater;
@@ -80,6 +85,10 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
         holder.photo = photo;
         holder.detector = new GestureDetector( holder.itemView.getContext(), new GestureListener(holder));
         holder.users = new StringBuilder();
+        if (isGoneFollow){
+            holder.follow.setVisibility(View.GONE);
+            holder.unFollow.setVisibility(View.GONE);
+        }
         getCurrentUsername();
         getLikesString(holder);
         if (photo.getTags() != null && !photo.getTags().isEmpty()){
@@ -120,7 +129,9 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
             imageLoader.displayImage(photo.getImage_Path(), holder.image);
         else
             holder.image.setVisibility(View.GONE);
-
+        if (!isGoneFollow) {
+            isFollowing(holder, photo.getUser_id());
+        }
         //get the profile image and username
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
@@ -141,14 +152,18 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
                     holder.username.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            Intent intent = new Intent(mContext, ProfileViewerActivity.class);
+                            intent.putExtra("userId",photo.getUser_id());
+                            mContext.startActivity(intent);
                         }
                     });
                     holder.avatar.setImageBitmap(getProfileImage(singleSnapshot.getValue(User.class).getImage()));
                     holder.avatar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            Intent intent = new Intent(mContext, ProfileViewerActivity.class);
+                            intent.putExtra("userId",photo.getUser_id());
+                            mContext.startActivity(intent);
                         }
                     });
 
@@ -172,7 +187,47 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
 
             }
         });
+        holder.follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Following")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(photo.getUser_id())
+                        .child("user_id")
+                        .setValue((photo.getUser_id()));
 
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Followers")
+                        .child(photo.getUser_id())
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("user_id")
+                        .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                setFollowing(holder);
+                increaseFollowers(photo);
+                increaseFollowing();
+                addFollowNotification(photo.getUser_id());
+            }
+        });
+
+        holder.unFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Following")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(photo.getUser_id())
+                        .removeValue();
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Followers")
+                        .child(photo.getUser_id())
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .removeValue();
+                setUnfollowing(holder);
+                decreaseFollowers(photo);
+                decreaseFollowing();
+            }
+        });
         if(reachedEndOfList(position)){
             loadMoreData();
         }
@@ -190,7 +245,7 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder{
         RoundedImageView avatar;
         String likesString = "";
-        TextView username, timeDetla, caption, likes, comments,mTags;
+        TextView username, timeDetla, caption, likes, comments,mTags,follow,unFollow;
         RoundedImageView image;
         ImageView heartRed, heartWhite, comment;
         User settings = new User();
@@ -214,6 +269,8 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
             timeDetla = (TextView) itemView.findViewById(R.id.itNewFeed_tvTimePost);
             avatar = (RoundedImageView) itemView.findViewById(R.id.itNewFeed_imvAvatar);
             mTags = (TextView)itemView.findViewById(R.id.itNewFeed_tvTag);
+            follow = (TextView)itemView.findViewById(R.id.itNewFeed_tvFollow);
+            unFollow = (TextView)itemView.findViewById(R.id.itNewFeed_tvUnFollow);
 
         }
     }
@@ -490,5 +547,131 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
         reference.child(userid).push().setValue(hashMappp);
 
     }
+    private void isFollowing(final ViewHolder holder, String userId){
+        setUnfollowing(holder);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("Following")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .orderByChild("user_id").equalTo(userId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found user:" + singleSnapshot.getValue());
+                    setFollowing(holder);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+    private void setFollowing(final ViewHolder holder){
+        holder.follow.setVisibility(View.GONE);
+        holder.unFollow.setVisibility(View.VISIBLE);
+    }
 
+    private void setUnfollowing(final ViewHolder holder){
+        holder.follow.setVisibility(View.VISIBLE);
+        holder.unFollow.setVisibility(View.GONE);
+    }
+    public void increaseFollowing(){
+        Log.d(TAG, "increaseFollowing: Increasing Following Count");
+
+        final DatabaseReference data = FirebaseDatabase.getInstance().getReference("Users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        data.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("following").getValue() != null){
+                    String postCount = Integer.toString(Integer.parseInt(snapshot.child("following").getValue().toString()) + 1);
+                    data.child("following").setValue(postCount);
+                }else {
+                    data.child("following").setValue("1");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+    }
+
+    public void decreaseFollowing(){
+        Log.d(TAG, "decreaseFollowing: decreasing Following Count");
+
+        final DatabaseReference data = FirebaseDatabase.getInstance().getReference("Users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        data.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("following").getValue() !=null) {
+                    String postCount = Integer.toString(Integer.parseInt(snapshot.child("following").getValue().toString()) - 1);
+                    data.child("following").setValue(postCount);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    public void decreaseFollowers(Post post){
+        Log.d(TAG, "decreaseFollowers: decreasing Followers Count");
+
+        final DatabaseReference data = FirebaseDatabase.getInstance().getReference("Users")
+                .child(post.getUser_id());
+        data.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("followers").getValue() != null){
+                    String postCount = Integer.toString(Integer.parseInt(snapshot.child("followers").getValue().toString()) - 1);
+                    data.child("followers").setValue(postCount);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void increaseFollowers(Post post){
+        final DatabaseReference data = FirebaseDatabase.getInstance().getReference("Users")
+                .child(post.getUser_id());
+        data.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("followers").getValue() != null) {
+                    String postCount = Integer.toString(Integer.parseInt(snapshot.child("followers").getValue().toString()) + 1);
+                    data.child("followers").setValue(postCount);
+                }else
+                     data.child("followers").setValue("1");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+    }
+    private void addFollowNotification(String userid){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications");
+        HashMap<String, Object> hashMappp = new HashMap<>();
+        hashMappp.put("userid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        hashMappp.put("text", "started following you");
+        hashMappp.put("postid", "");
+        hashMappp.put("ispost", false);
+        reference.child(userid).push().setValue(hashMappp);
+
+    }
 }

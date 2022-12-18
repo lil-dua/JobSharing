@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
+import tech.android.jobsharing.R;
 import tech.android.jobsharing.base.BaseActivity;
 import tech.android.jobsharing.databinding.ActivityNewPostBinding;
 import tech.android.jobsharing.models.User;
@@ -148,7 +149,7 @@ public class NewPostActivity extends BaseActivity {
                             increasePostCount(count);
                             addPost(status, getTimestamp(), String.valueOf(uri), RandomUId, userId, tags);
                             progressDialog.dismiss();
-                            Toast.makeText(NewPostActivity.this, "Posted successfully", Toast.LENGTH_SHORT).show();
+                            showToast(getString(R.string.posted_successfully));
                             setResultOk();
                         }
                     });
@@ -200,8 +201,8 @@ public class NewPostActivity extends BaseActivity {
     public void addPostNoImage(String caption, String date_Created,String post_id, String user_id, String tags){
         HashMap<String, String> hashMappp = new HashMap<>();
         hashMappp.put("caption", caption);
-        hashMappp.put("date_Created", date_Created);
-        hashMappp.put("post_id", post_id);
+        hashMappp.put("dateCreated", date_Created);
+        hashMappp.put("postId", post_id);
         hashMappp.put("tags", tags);
         hashMappp.put("userId", user_id);
         databaseReference.child("Post").child(user_id).child(post_id).setValue(hashMappp);

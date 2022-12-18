@@ -67,15 +67,26 @@
 
 
                 <TextView
-                    android:id="@+id/itNewFeed_imvOptions"
+                    android:id="@+id/itNewFeed_tvFollow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/_12sdp"
-                    android:text="+ Follow"
+                    android:text="@string/add_follow"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/blue_link"/>
+                <TextView
+                    android:id="@+id/itNewFeed_tvUnFollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:text="@string/following"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/gray_050"/>
             </LinearLayout>
 
             <View

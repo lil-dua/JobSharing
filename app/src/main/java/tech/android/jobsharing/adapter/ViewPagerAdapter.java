@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import tech.android.jobsharing.fragment.Fragment_Job;
 import tech.android.jobsharing.fragment.Fragment_Newsfeed;
 import tech.android.jobsharing.fragment.Fragment_Notification;
 import tech.android.jobsharing.fragment.Fragment_Profile;
@@ -30,6 +31,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new Fragment_Search();
             case 3:
                 return new Fragment_Notification();
+            case 4:
+                return new Fragment_Job();
             case 0:
             default:
                 return new Fragment_Newsfeed();
@@ -38,6 +41,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 }
