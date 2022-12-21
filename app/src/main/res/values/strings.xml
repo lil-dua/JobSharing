@@ -99,4 +99,5 @@
     <string name="job">Job</string>
     <string name="show_all_post">Show all post</string>
     <string name="follow">Follow</string>
+    <string name="group_image">Group Image</string>
 </resources>

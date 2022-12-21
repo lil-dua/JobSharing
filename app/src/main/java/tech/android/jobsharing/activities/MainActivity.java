@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     // fragment search
-                    tab.setIcon(R.drawable.ic_search_50);
+                    tab.setIcon(R.drawable.ic_group);
                     break;
                 case 3:
                     // fragment notification
