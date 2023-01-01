@@ -59,7 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="HCMC -  Java Developer"
-                android:textSize="@dimen/_17sdp"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:textColor="@color/primary_text"/>
@@ -71,6 +72,7 @@
                 <ImageView
                     android:layout_width="@dimen/_36sdp"
                     android:layout_height="@dimen/_36sdp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_company_default"
                     android:id="@+id/actJobDetail_imvCompany"/>
                 <LinearLayout
@@ -83,18 +85,18 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/actJobDetail_tvCompany"
                         android:text="ABI Company"
-                        android:layout_marginStart="@dimen/_8sdp"
-
-
-                        />
+                        android:textStyle="bold"
+                        android:textColor="@color/primary"
+                        android:layout_marginStart="@dimen/_8sdp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/actJobDetail_tvLocation"
                         android:text="Ha Noi, Viet Nam"
+                        android:textColor="@color/secondary_text"
+                        android:textStyle="bold"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        />
+                        android:layout_marginTop="@dimen/_2sdp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -136,7 +138,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:text="Full time"/>
+                    android:text="Full time"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -153,20 +157,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:text="On-site"/>
+                    android:text="On-site"
+                    android:textColor="@color/secondary_text"
+                    android:textStyle="bold"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="@dimen/_4sdp"
                 android:background="#E8E6E6"
-                android:layout_marginVertical="@dimen/_12sdp"/>
+                android:layout_marginVertical="@dimen/_6sdp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/meet_the_hiring_team"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_12ssp"
                 android:layout_marginHorizontal="@dimen/_12sdp"
-                android:textColor="@color/primary_text"/>
+                android:textColor="@color/primary_text"
+                android:textStyle="bold"/>
             <LinearLayout
                 android:id="@+id/actJobDetail_llPoster"
                 android:layout_width="match_parent"
@@ -204,46 +211,27 @@
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="@dimen/_4sdp"
                 android:background="#E8E6E6"
-                android:layout_marginVertical="@dimen/_12sdp"/>
+                android:layout_marginVertical="@dimen/_6sdp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/job_description"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:textColor="@color/primary_text"/>
+
             <TextView
                 android:id="@+id/actJobDetail_tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mô tả công việc
-Lập trình ứng dụng trên nền tảng Android (Kotlin)
-Nghiên cứu giải pháp và triển khai giải pháp theo yêu cầu của từng sản phẩm
-Báo cáo tiến độ và tình trạng công việc trực tiếp tới quản lý dự án
-Các công việc hỗ trợ khác khi có yêu cầu
-Yêu cầu ứng viên
-Sinh viên sắp hoặc đã tốt nghiệp Đại học chuyên ngành Công nghệ thông tin
-Không yêu cầu kinh nghiệm
-Có thể làm Fulltime, gắn bó lâu dài
-Có kiến thức về cấu trúc dữ liệu, giải thuật và lập trình hướng đối tượng (OOP)
-Từng tham gia các dự án hay các project cá nhân về Android hay có kinh nghiệm làm về ứng dụng, game đã được phát hành trên Google Play là một lợi thế
-Tư duy logic tốt, cẩn thận, giao tiếp tốt
-Có đam mê với lập trình, chủ động, sẵn sàng học hỏi và có thể học hỏi nhanh
-Quyền lợi
-Hỗ trợ lương từ 2.5 - 5 triệu/tháng (offer theo năng lực)
-Cơ hội trở thành nhân viên chính thức sau 2 tháng thực tập với mức lương thưởng hấp dẫn
-Được đào tạo bởi leader dày dặn kinh nghiệm, nâng cao chuyên môn và có định hướng công việc rõ ràng cho bản thân
-Quy trình đào tạo bài bản để trở thành Lập trình viên Android, được học hỏi về xử lý bất đồng bộ (Asynctask, RxAndroid, RxKotlin), design pattern MVVM, làm việc với RESTful Api, Firebase,…
-Trực tiếp tham gia dự án lớn thực tế và trải nghiệm với các xu hướng mới một cách nhanh chóng nhất
-Trải nghiệm một môi trường tuyệt vời, văn hóa trẻ trung thoải mái
-Tham gia các hoạt động ăn chơi hàng ngày, các hoạt động thể thao hàng tuần cùng công ty
-Cách thức ứng tuyển"
-                android:textSize="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginHorizontal="@dimen/_12sdp"
-                android:textColor="@color/primary_text"/>
+                android:layout_marginTop="@dimen/_6sdp"
+                android:text="Mô tả công việc "
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_10sdp" />
 
         </LinearLayout>
 

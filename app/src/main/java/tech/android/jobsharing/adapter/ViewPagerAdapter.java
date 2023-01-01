@@ -9,7 +9,7 @@ import tech.android.jobsharing.fragment.Fragment_Job;
 import tech.android.jobsharing.fragment.Fragment_Newsfeed;
 import tech.android.jobsharing.fragment.Fragment_Notification;
 import tech.android.jobsharing.fragment.Fragment_Profile;
-import tech.android.jobsharing.fragment.Fragment_Search;
+import tech.android.jobsharing.fragment.Fragment_Group;
 
 
 /***
@@ -28,7 +28,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new Fragment_Profile();
             case 2:
-                return new Fragment_Search();
+                return new Fragment_Group();
             case 3:
                 return new Fragment_Notification();
             case 4:

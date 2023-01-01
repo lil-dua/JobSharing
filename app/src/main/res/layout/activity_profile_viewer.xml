@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_6sdp"
-        android:background="@color/white"
+        android:background="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textTitle">
 
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/follower"
                     android:textColor="@color/primary_text"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     app:layout_constraintTop_toBottomOf="@+id/numFollower"
                     app:layout_constraintStart_toStartOf="@+id/numFollower"
                     app:layout_constraintEnd_toEndOf="@+id/numFollower"/>
@@ -91,7 +91,7 @@
                     android:textColor="@color/primary_text"
                     app:layout_constraintStart_toStartOf="@+id/numFollowing"
                     app:layout_constraintEnd_toEndOf="@+id/numFollowing"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     app:layout_constraintTop_toBottomOf="@+id/numFollowing"
                     />
 
@@ -100,13 +100,13 @@
                     android:id="@+id/numFollower"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_8sdp"
                     android:text="0"
                     android:textColor="@color/primary_text"
                     android:textStyle="bold"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:textSize="@dimen/_13sdp"
                     app:layout_constraintRight_toLeftOf="@+id/numFollowing"
-                    app:layout_constraintBottom_toBottomOf="@id/imageProfile"
                     app:layout_constraintLeft_toRightOf="@id/imageProfile"
                     app:layout_constraintTop_toTopOf="@id/imageProfile" />
 
@@ -114,15 +114,78 @@
                     android:id="@+id/numFollowing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_8sdp"
                     android:text="0"
                     android:textSize="@dimen/_13sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:textColor="@color/primary_text"
                     android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/imageProfile"
                     app:layout_constraintLeft_toRightOf="@+id/numFollower"
                     app:layout_constraintTop_toTopOf="@id/imageProfile" />
+
+                <LinearLayout
+                    android:id="@+id/fmProfile_llViewer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_26sdp"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:weightSum="2"
+                    app:layout_constraintBottom_toBottomOf="@id/imageProfile"
+                    app:layout_constraintLeft_toRightOf="@id/imageProfile"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <TextView
+                        android:id="@+id/fmProfile_tvFollow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_round_red_12"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:text="@string/follow"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fmProfile_tvMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_round_stroke_12"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:text="@string/message"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/fmProfile_tvMessage2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_26sdp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_round_stroke_12"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_24sdp"
+                    android:paddingRight="@dimen/_24sdp"
+                    android:text="@string/message"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageProfile"
+                    app:layout_constraintLeft_toRightOf="@id/imageProfile"
+                    app:layout_constraintRight_toRightOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -152,62 +215,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/link"
                 android:textColor="@color/blue_link"
                 android:textSize="@dimen/_11ssp" />
 
-            <LinearLayout
-                android:id="@+id/fmProfile_llViewer"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_26sdp"
-                android:orientation="horizontal"
-                android:visibility="visible"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:weightSum="2"
-                >
-                <TextView
-                    android:id="@+id/fmProfile_tvFollow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="@string/follow"
-                    android:textSize="@dimen/_13sdp"
-                    android:layout_marginRight="@dimen/_8sdp"
-                    android:background="@drawable/bg_round_red_12"/>
-                <TextView
-                    android:id="@+id/fmProfile_tvMessage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/primary"
-                    android:text="@string/message"
-                    android:textSize="@dimen/_13sdp"
-                    android:background="@drawable/bg_round_stroke_12"/>
-            </LinearLayout>
 
-            <TextView
-                android:id="@+id/fmProfile_tvMessage2"
-                android:layout_width="match_parent"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_height="@dimen/_26sdp"
-                android:layout_weight="1"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:visibility="gone"
-                android:textColor="@color/primary"
-                android:text="@string/message"
-                android:textSize="@dimen/_13sdp"
-                android:background="@drawable/bg_round_stroke_12"/>
+
             <View
                 android:id="@+id/viewSupporter2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
+                android:layout_height="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:background="#E8E6E6"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -216,8 +233,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/background_content_bottom"
+                android:background="@color/background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageEditProfile">
 
@@ -245,17 +261,20 @@
                         android:textSize="@dimen/_24sdp"
                         android:textStyle="bold" />
                 </FrameLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:id="@+id/fmProfile_ctJob"
                     android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:background="@color/background"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:layout_height="wrap_content">
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/fmProfile_rcvJob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:overScrollMode="never"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -269,12 +288,24 @@
                         android:layout_marginTop="@dimen/_4sdp"
                         android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@+id/fmProfile_rcvJob"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <View
+                    android:id="@id/viewSupporter3"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:background="#E8E6E6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmProfile_ctJob"
+                    app:layout_constraintBottom_toTopOf="@id/fmProfile_ctNewsfeed"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fmProfile_ctNewsfeed"
                     android:layout_width="match_parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fmProfile_ctJob"
+                    android:background="@color/background"
+                    app:layout_constraintTop_toBottomOf="@+id/viewSupporter3"
                     android:layout_height="wrap_content">
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/newsfeedRecyclerView"

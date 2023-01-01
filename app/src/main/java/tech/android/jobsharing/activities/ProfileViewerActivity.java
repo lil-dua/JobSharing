@@ -27,7 +27,6 @@ import java.util.Objects;
 import tech.android.jobsharing.adapter.JobsAdapter;
 import tech.android.jobsharing.adapter.NewFeedAdapter;
 import tech.android.jobsharing.base.BaseActivity;
-import tech.android.jobsharing.databinding.ActivityNewPostBinding;
 import tech.android.jobsharing.databinding.ActivityProfileViewerBinding;
 import tech.android.jobsharing.models.Comments;
 import tech.android.jobsharing.models.Job;

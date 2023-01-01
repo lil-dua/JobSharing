@@ -100,6 +100,7 @@ public class NewPostActivity extends BaseActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,PICK_IMAGE_REQUEST);
+
     }
 
 
@@ -201,8 +202,8 @@ public class NewPostActivity extends BaseActivity {
     public void addPostNoImage(String caption, String date_Created,String post_id, String user_id, String tags){
         HashMap<String, String> hashMappp = new HashMap<>();
         hashMappp.put("caption", caption);
-        hashMappp.put("dateCreated", date_Created);
-        hashMappp.put("postId", post_id);
+        hashMappp.put("date_Created", date_Created);
+        hashMappp.put("post_id", post_id);
         hashMappp.put("tags", tags);
         hashMappp.put("userId", user_id);
         databaseReference.child("Post").child(user_id).child(post_id).setValue(hashMappp);
