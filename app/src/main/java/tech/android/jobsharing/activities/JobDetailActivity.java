@@ -1,7 +1,6 @@
 package tech.android.jobsharing.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -52,6 +51,8 @@ public class JobDetailActivity extends BaseActivity {
         binding.actJobDetailTvTitle.setText(job.getPosition());
         binding.actJobDetailTvLocation.setText(job.getLocation());
         binding.actJobDetailTvJobType.setText(job.getJobType());
+        binding.actJobDetailTvExperience.setText(job.getExperience());
+        binding.actJobDetailTvNumberEmployee.setText(job.getNumberEmployee());
         binding.actJobDetailTvWorkplace.setText(job.getWorkplaceType());
         binding.actJobDetailTvDescription.setText(job.getDescription());
         binding.actJobTvTime.setText((new TimeAgo()).covertTimeToText(job.getDateCreated()));

@@ -151,13 +151,57 @@
                 <ImageView
                     android:layout_width="@dimen/_16sdp"
                     android:layout_height="@dimen/_16sdp"
-                    android:src="@drawable/ic_baseline_home_work_24"/>
+                    android:src="@drawable/ic_place"/>
                 <TextView
                     android:id="@+id/actJobDetail_tvWorkplace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:text="On-site"
+                    android:textColor="@color/secondary_text"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@drawable/ic_baseline_home_work_24"/>
+                <TextView
+                    android:id="@+id/actJobDetail_tvExperience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:text="None Experience"
+                    android:textColor="@color/secondary_text"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@drawable/ic_user"/>
+                <TextView
+                    android:id="@+id/actJobDetail_tvNumberEmployee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:text="8"
+                    android:textColor="@color/primary_text"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/persons"
                     android:textColor="@color/secondary_text"
                     android:textStyle="bold"/>
             </LinearLayout>
@@ -214,6 +258,7 @@
                 android:layout_height="@dimen/_4sdp"
                 android:background="#E8E6E6"
                 android:layout_marginVertical="@dimen/_6sdp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -223,12 +268,13 @@
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:textColor="@color/primary_text"/>
 
+
             <TextView
                 android:id="@+id/actJobDetail_tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:text="Mô tả công việc "
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/_10sdp" />

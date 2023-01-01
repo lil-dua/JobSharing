@@ -1,19 +1,29 @@
 package tech.android.jobsharing.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import tech.android.jobsharing.databinding.ActivitySignInBinding;
+import tech.android.jobsharing.utils.LanguageConfig;
 
 public class SignInActivity extends AppCompatActivity {
     private ActivitySignInBinding binding;
     private FirebaseAuth mAuth;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String languageCode = "vi";
+        Context context = LanguageConfig.changeLanguage(newBase, languageCode);
+        super.attachBaseContext(context);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,4 +101,6 @@ public class SignInActivity extends AppCompatActivity {
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
     }
+
+
 }

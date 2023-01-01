@@ -8,6 +8,7 @@ android {
     compileSdk 32
 
     defaultConfig {
+        resConfigs ("en", "vi")
         applicationId "tech.android.jobsharing"
         minSdk 21
         targetSdk 32
