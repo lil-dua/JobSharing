@@ -2,6 +2,7 @@ package tech.android.jobsharing.fragment;
 
 import static com.nostra13.universalimageloader.core.ImageLoader.TAG;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +37,7 @@ import tech.android.jobsharing.activities.CreateGroupActivity;
 import tech.android.jobsharing.activities.GroupsActivity;
 import tech.android.jobsharing.adapter.GroupAdapter;
 import tech.android.jobsharing.models.Group;
+import tech.android.jobsharing.utils.UniversalImageLoader;
 
 /***
  * Created by HoangRyan aka LilDua on 11/6/2022.
@@ -53,6 +55,7 @@ public class Fragment_Group extends Fragment {
     private ProgressBar progressBar;
     private List<Group> groupList;
     private ArrayList<Group> mPaginatedGroups;
+    int LAUNCH_SECOND_ACTIVITY = 1;
 
 
     @Nullable
@@ -60,8 +63,13 @@ public class Fragment_Group extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_group,container,false);
         init();
-        getFollowing();
         setListeners();
+        initImageLoader();
+        getFollowing();
+        displayMoreGroup();
+        groupList = new ArrayList<>();
+        mPaginatedGroups = new ArrayList<>();
+        mFollowing = new ArrayList<>();
         return view;
     }
 
@@ -71,9 +79,6 @@ public class Fragment_Group extends Fragment {
         imgSearch = view.findViewById(R.id.imageSearch);
         edtSearch = view.findViewById(R.id.editTextSearch);
         fabNewGroup = view.findViewById(R.id.fabNewGroup);
-
-        groupList = new ArrayList<>();
-
     }
 
     private void setListeners() {
@@ -81,15 +86,52 @@ public class Fragment_Group extends Fragment {
 
         });
         fabNewGroup.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), CreateGroupActivity.class);
+            Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
             startActivity(intent);
         });
     }
+    private void initImageLoader() {
+        UniversalImageLoader universalImageLoader = new UniversalImageLoader(getActivity());
+        ImageLoader.getInstance().init(universalImageLoader.getConfig());
+    }
 
 
-    //show Toast
-    private void showToast(String message){
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                getFollowing();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+            }
+        }
+    }
+    public void displayMoreGroup(){
+        Log.d(TAG, "displayMorePhotos: displaying more photos");
+        try{
+            if(groupList.size() > mResults && groupList.size() > 0){
+                int iterations;
+                if(groupList.size() > (mResults + 10)){
+                    Log.d(TAG, "displayMorePhotos: there are greater than 10 more photos");
+                    iterations = 10;
+                }else{
+                    Log.d(TAG, "displayMorePhotos: there is less than 10 more photos");
+                    iterations = groupList.size() - mResults;
+                }
+
+                //add the new photos to the paginated results
+                for(int i = mResults; i < mResults + iterations; i++){
+                    mPaginatedGroups.add(groupList.get(i));
+                }
+                mResults = mResults + iterations;
+                groupAdapter.notifyDataSetChanged();
+            }
+        }catch (NullPointerException e){
+            Log.e(TAG, "displayPhotos: NullPointerException: " + e.getMessage() );
+        }catch (IndexOutOfBoundsException e){
+            Log.e(TAG, "displayPhotos: IndexOutOfBoundsException: " + e.getMessage() );
+        }
     }
 
     private void getFollowing(){

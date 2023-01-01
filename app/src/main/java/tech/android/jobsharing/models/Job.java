@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Job implements Parcelable {
-    private String position, company,imageCompany, workplaceType, location, jobType, description, jobId, userId, dateCreated;
+    private String position, company,imageCompany, workplaceType, location, jobType,numberEmployee,experience, description, jobId, userId, dateCreated;
 
 
     protected Job(Parcel in) {
@@ -14,6 +14,8 @@ public class Job implements Parcelable {
         workplaceType = in.readString();
         location = in.readString();
         jobType = in.readString();
+        numberEmployee = in.readString();
+        experience = in.readString();
         description = in.readString();
         jobId = in.readString();
         userId = in.readString();
@@ -32,13 +34,15 @@ public class Job implements Parcelable {
         }
     };
 
-    public Job(String position, String company, String imageCompany, String workplaceType, String location, String jobType, String description, String jobId, String userId, String dateCreated) {
+    public Job(String position, String company, String imageCompany, String workplaceType, String location, String jobType,String numberEmployee,String experience, String description, String jobId, String userId, String dateCreated) {
         this.position = position;
         this.company = company;
         this.imageCompany = imageCompany;
         this.workplaceType = workplaceType;
         this.location = location;
         this.jobType = jobType;
+        this.numberEmployee =numberEmployee;
+        this.experience = experience;
         this.description = description;
         this.jobId = jobId;
         this.userId = userId;
@@ -61,6 +65,8 @@ public class Job implements Parcelable {
         dest.writeString(workplaceType);
         dest.writeString(location);
         dest.writeString(jobType);
+        dest.writeString(numberEmployee);
+        dest.writeString(experience);
         dest.writeString(description);
         dest.writeString(jobId);
         dest.writeString(userId);
@@ -113,6 +119,22 @@ public class Job implements Parcelable {
 
     public void setJobType(String jobType) {
         this.jobType = jobType;
+    }
+
+    public String getNumberEmployee() {
+        return numberEmployee;
+    }
+
+    public void setNumberEmployee(String numberEmployee) {
+        this.numberEmployee = numberEmployee;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
 
     public String getDescription() {

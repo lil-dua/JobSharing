@@ -100,4 +100,12 @@
     <string name="show_all_post">Show all post</string>
     <string name="follow">Follow</string>
     <string name="group_image">Group Image</string>
+    <string name="employees">Employees</string>
+    <string name="add_number_of_employee">Add number of employee</string>
+    <string name="number_employees">Number Employees*</string>
+    <string name="none_experience">None Experience</string>
+    <string name="choose_the_experience_requirement">Choose the experience requirement</string>
+    <string name="under_1_year_experience">Under 1 year experience</string>
+    <string name="than_1_year_experience">Than 1 year experience</string>
+    <string name="than_2_year_experience">Than 2 year experience</string>
 </resources>

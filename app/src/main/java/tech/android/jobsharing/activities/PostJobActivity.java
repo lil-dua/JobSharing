@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,14 +27,15 @@ import java.util.UUID;
 
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.base.BaseActivity;
-import tech.android.jobsharing.databinding.ActivityNewPostBinding;
 import tech.android.jobsharing.databinding.ActivityPostJobBinding;
+import tech.android.jobsharing.dialog.ExperienceDialog;
 import tech.android.jobsharing.dialog.WorkplaceDialog;
 import tech.android.jobsharing.models.Job;
 
 public class PostJobActivity extends BaseActivity {
     private ActivityPostJobBinding binding;
     private String workplaceType = "";
+    private String experience = "";
     private String userId;
     private int PICK_IMAGE_REQUEST = 123;
     DatabaseReference databaseReference, data;
@@ -44,19 +45,23 @@ public class PostJobActivity extends BaseActivity {
     @Override
     protected void initAction() {
         workplaceType = getString(R.string.on_site);
-        binding.actPostJobLlWorkplace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WorkplaceDialog dialog = WorkplaceDialog.newInstance(workplaceType, new WorkplaceDialog.OnActionListener() {
-                    @Override
-                    public void onCLick(String type) {
-                        workplaceType = type;
-                        binding.actPostJobTvWorkplace.setText(type);
-                    }
-                });
-                dialog.show(getSupportFragmentManager(), WorkplaceDialog.class.getName());
-            }
+        binding.actPostJobLlWorkplace.setOnClickListener(v -> {
+            WorkplaceDialog dialog = WorkplaceDialog.newInstance(workplaceType, type -> {
+                workplaceType = type;
+                binding.actPostJobTvWorkplace.setText(type);
+            });
+            dialog.show(getSupportFragmentManager(), WorkplaceDialog.class.getName());
         });
+        //experience
+        experience = getString(R.string.none_experience);
+        binding.actPostJobLlExperience.setOnClickListener(v -> {
+            ExperienceDialog dialog = ExperienceDialog.newInstance(experience, type -> {
+                experience = type;
+                binding.actPostJobTvExperience.setText(type);
+            });
+            dialog.show(getSupportFragmentManager(),ExperienceDialog.class.getName());
+        });
+        //post job
         binding.actPostJobImvPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +109,8 @@ public class PostJobActivity extends BaseActivity {
         hashMappp.put("workplaceType", job.getWorkplaceType());
         hashMappp.put("location", job.getLocation());
         hashMappp.put("jobType", job.getJobType());
+        hashMappp.put("numberEmployee", job.getNumberEmployee());
+        hashMappp.put("experience", job.getExperience());
         hashMappp.put("description", job.getDescription());
         hashMappp.put("jobId", job.getJobId());
         hashMappp.put("userId", job.getUserId());
@@ -154,6 +161,8 @@ public class PostJobActivity extends BaseActivity {
                                     binding.actPostJobTvWorkplace.getText().toString(),
                                     binding.actPostJobTvLocation.getText().toString(),
                                     binding.actPostJobTvType.getText().toString(),
+                                    binding.actPostJobTvNumberEmployee.getText().toString(),
+                                    binding.actPostJobTvExperience.getText().toString(),
                                     binding.actPostJobTvDescription.getText().toString(),
                                     RandomUId,
                                     userId,
@@ -193,6 +202,8 @@ public class PostJobActivity extends BaseActivity {
                     binding.actPostJobTvWorkplace.getText().toString(),
                     binding.actPostJobTvLocation.getText().toString(),
                     binding.actPostJobTvType.getText().toString(),
+                    binding.actPostJobTvNumberEmployee.getText().toString(),
+                    binding.actPostJobTvExperience.getText().toString(),
                     binding.actPostJobTvDescription.getText().toString(),
                     RandomUId,
                     userId,

@@ -75,8 +75,10 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/add_job_position"
                 android:layout_marginTop="@dimen/_3sdp"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
                 android:background="@color/transparent"
-                android:textColor="@color/primary_text"
+                android:textColor="@color/secondary_text"
                 android:textSize="@dimen/_14sdp"/>
         </LinearLayout>
         <View
@@ -120,10 +122,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/add_company"
+                    android:maxLines="1"
                     android:background="@color/transparent"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_3sdp"
-                    android:textColor="@color/primary_text"
+                    android:imeOptions="actionNext"
+                    android:textColor="@color/secondary_text"
                     android:textSize="@dimen/_14sdp"/>
             </LinearLayout>
 
@@ -161,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:text="On-site"
                 android:background="@color/transparent"
-                android:textColor="@color/primary_text"
+                android:textColor="@color/secondary_text"
                 android:textSize="@dimen/_14sdp"/>
         </LinearLayout>
         <View
@@ -195,8 +199,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_3sdp"
                 android:hint="@string/add_location"
+                android:maxLines="1"
+                android:imeOptions="actionNext"
                 android:background="@color/transparent"
-                android:textColor="@color/primary_text"
+                android:textColor="@color/secondary_text"
                 android:textSize="@dimen/_14sdp"/>
         </LinearLayout>
         <View
@@ -230,8 +236,83 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_3sdp"
                 android:hint="@string/add_job_type"
+                android:maxLines="1"
+                android:imeOptions="actionNext"
                 android:background="@color/transparent"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/_14sdp"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:background="@color/gray_050"/>
+        <LinearLayout
+            android:id="@+id/actPostJob_llNumberEployee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/primary_text"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:text="@string/number_employees"
+                />
+            <EditText
+                android:id="@+id/actPostJob_tvNumberEmployee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:inputType="number"
+                android:hint="@string/add_number_of_employee"
+                android:imeOptions="actionNext"
+                android:background="@color/transparent"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/_14sdp"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:background="@color/gray_050"/>
+
+        <LinearLayout
+            android:id="@+id/actPostJob_llExperience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:text="Experience Requirement*"
+                />
+            <TextView
+                android:id="@+id/actPostJob_tvExperience"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_height="wrap_content"
+                android:text="@string/none_experience"
+                android:background="@color/transparent"
+                android:textColor="@color/secondary_text"
                 android:textSize="@dimen/_14sdp"/>
         </LinearLayout>
         <View
@@ -265,8 +346,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/add_description"
                 android:layout_marginTop="@dimen/_3sdp"
+                android:imeOptions="actionDone"
                 android:background="@color/transparent"
-                android:textColor="@color/primary_text"
+                android:textColor="@color/secondary_text"
                 android:textSize="@dimen/_14sdp"/>
         </LinearLayout>
 

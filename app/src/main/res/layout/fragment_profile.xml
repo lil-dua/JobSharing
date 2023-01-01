@@ -62,8 +62,8 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/imageProfile"
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_70sdp"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_18sdp"
                     android:background="@drawable/background_image"
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/follower"
                     android:textColor="@color/primary_text"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     app:layout_constraintTop_toBottomOf="@+id/numFollower"
                     app:layout_constraintStart_toStartOf="@+id/numFollower"
                     app:layout_constraintEnd_toEndOf="@+id/numFollower"/>
@@ -91,7 +91,7 @@
                     android:textColor="@color/primary_text"
                     app:layout_constraintStart_toStartOf="@+id/numFollowing"
                     app:layout_constraintEnd_toEndOf="@+id/numFollowing"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     app:layout_constraintTop_toBottomOf="@+id/numFollowing"
                     />
 
@@ -100,13 +100,13 @@
                     android:id="@+id/numFollower"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_8sdp"
                     android:text="0"
                     android:textColor="@color/primary_text"
                     android:textStyle="bold"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:textSize="@dimen/_13sdp"
                     app:layout_constraintRight_toLeftOf="@+id/numFollowing"
-                    app:layout_constraintBottom_toBottomOf="@id/imageProfile"
                     app:layout_constraintLeft_toRightOf="@id/imageProfile"
                     app:layout_constraintTop_toTopOf="@id/imageProfile" />
 
@@ -114,15 +114,42 @@
                     android:id="@+id/numFollowing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_8sdp"
                     android:text="0"
                     android:textSize="@dimen/_13sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:textColor="@color/primary_text"
                     android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/imageProfile"
                     app:layout_constraintLeft_toRightOf="@+id/numFollower"
                     app:layout_constraintTop_toTopOf="@id/imageProfile" />
+
+                <FrameLayout
+                    android:id="@+id/fmProfile_llEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/imageProfile"
+                    app:layout_constraintLeft_toRightOf="@id/imageProfile"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/imageEditProfile"
+                        android:layout_width="@dimen/_120sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/background_button_12" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/edit_your_profile"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -150,34 +177,13 @@
                 android:id="@+id/txtLink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Link website"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:textColor="@color/blue_link"
                 android:textSize="@dimen/_11ssp" />
 
-            <FrameLayout
-                android:id="@+id/fmProfile_llEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp">
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/imageEditProfile"
-                    android:layout_width="@dimen/_220sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/background_button_12" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/edit_your_profile"
-                    android:textColor="@color/primary"
-                    android:textSize="@dimen/_10ssp"
-                    android:textStyle="bold" />
-
-            </FrameLayout>
             <LinearLayout
                 android:id="@+id/fmProfile_llViewer"
                 android:layout_width="match_parent"
@@ -218,14 +224,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:background="#E8E6E6"
+                android:background="@color/background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/background_content_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageEditProfile">
@@ -267,7 +272,6 @@
                         android:orientation="vertical"
                         android:overScrollMode="never"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:padding="@dimen/_10sdp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                     <TextView
                         android:layout_width="wrap_content"

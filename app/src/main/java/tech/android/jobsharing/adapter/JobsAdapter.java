@@ -1,48 +1,27 @@
 package tech.android.jobsharing.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import tech.android.jobsharing.R;
-import tech.android.jobsharing.activities.CommentActivity;
-import tech.android.jobsharing.models.Comments;
 import tech.android.jobsharing.models.Job;
-import tech.android.jobsharing.models.Likes;
-import tech.android.jobsharing.models.Post;
-import tech.android.jobsharing.models.User;
 import tech.android.jobsharing.utils.TimeAgo;
 
 public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>{
@@ -112,7 +91,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>{
     }
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView jobPosition,company, location, jobType, time;
-        ImageView imvCompany;
+        RoundedImageView imvCompany;
         View line;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -122,7 +101,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>{
             jobType = (TextView) itemView.findViewById(R.id.itJob_tvJobType);
             time = (TextView) itemView.findViewById(R.id.itJob_tvTime);
             line = (View) itemView.findViewById(R.id.itNewFeed_line);
-            imvCompany = (ImageView) itemView.findViewById(R.id.itJob_imvCompany);
+            imvCompany = (RoundedImageView) itemView.findViewById(R.id.itJob_imvCompany);
         }
     }
     private boolean reachedEndOfList(int position){
