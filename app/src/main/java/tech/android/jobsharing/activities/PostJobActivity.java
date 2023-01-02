@@ -218,11 +218,11 @@ public class PostJobActivity extends BaseActivity {
 
     private void DialogCancel(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Do you want to remove this post?");
-        builder.setNegativeButton("Remove",(dialogInterface, i) ->
+        builder.setMessage(getString(R.string.do_you_want_to_remove));
+        builder.setNegativeButton(getString(R.string.remove),(dialogInterface, i) ->
                 setResultCancel()
         );
-        builder.setPositiveButton("Continue",(dialogInterface, i) -> {
+        builder.setPositiveButton(getString(R.string.txt_continue),(dialogInterface, i) -> {
         });
         builder.show();
     }

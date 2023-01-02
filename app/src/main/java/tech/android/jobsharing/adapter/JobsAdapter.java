@@ -121,7 +121,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>{
         }
     }
     private String getTimestampDifference(Job job){
-        TimeAgo timeAgo = new TimeAgo();
+        TimeAgo timeAgo = new TimeAgo(mContext);
         final String photoTimestamp = job.getDateCreated();
         return timeAgo.covertTimeToText(photoTimestamp);
     }

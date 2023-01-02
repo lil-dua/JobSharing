@@ -2,6 +2,7 @@ package tech.android.jobsharing.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -19,8 +20,9 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        String languageCode = "vi";
-        Context context = LanguageConfig.changeLanguage(newBase, languageCode);
+        SharedPreferences sharedPref = newBase.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String language = sharedPref.getString("language", "vi");
+        Context context = LanguageConfig.changeLanguage(newBase, language);
         super.attachBaseContext(context);
     }
 

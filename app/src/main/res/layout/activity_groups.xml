@@ -4,36 +4,254 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/primary"
+    android:fitsSystemWindows="true"
     tools:context=".activities.ConversationsActivity">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/actGroup_ctHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_6sdp"
+                android:background="@color/primary"
+                app:layout_constraintTop_toTopOf="parent">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageBack"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:background="@drawable/background_icon"
+                    android:padding="@dimen/_6sdp"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white"/>
+
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="Group Name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageBack"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:background="@drawable/background_icon"
-        android:padding="@dimen/_6sdp"
-        android:src="@drawable/ic_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/actGroup_ctHeader"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_30sdp"
-        android:text="Group Name"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/_6sdp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/re"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_140sdp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_logo"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                    <View
+                        android:id="@+id/viewSupporter1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_3sdp"
+                        android:background="@color/primary"
+                        app:layout_constraintTop_toBottomOf="@id/imageBackground"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <RelativeLayout
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/_10sdp"
+                        app:layout_constraintTop_toBottomOf="@id/imageBackground"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <TextView
+                            android:id="@+id/textGroupName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Group Name"
+                            android:textColor="@color/primary_text"
+                            android:textStyle="bold"
+                            android:padding="@dimen/_5sdp"
+                            android:textSize="@dimen/_15ssp"
+                            android:layout_marginStart="@dimen/_10sdp" />
+
+                        <TextView
+                            android:id="@+id/textNumberMember"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:textColor="@color/primary_text"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_11ssp"
+                            android:layout_below="@id/textGroupName"/>
+
+                        <TextView
+                            android:id="@+id/titleSupporter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textGroupName"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_toRightOf="@id/textNumberMember"
+                            android:text="@string/members"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <TextView
+                            android:id="@+id/titleSupporter2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textNumberMember"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:text="@string/date_created"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <TextView
+                            android:id="@+id/textGroupDateCreated"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_11ssp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary_text"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_75sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_below="@id/textNumberMember"
+                            android:layout_toRightOf="@id/titleSupporter2"/>
+
+                        <TextView
+                            android:id="@+id/textGroupDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_11ssp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_below="@id/textGroupDateCreated"/>
+
+                        <Button
+                            android:id="@+id/btnJoin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textGroupDescription"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="@string/join"
+                            android:textStyle="bold" />
+                        <Button
+                            android:id="@+id/btnLeave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textGroupDescription"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="@string/leave"
+                            android:visibility="gone"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_4sdp"
+                    android:background="#E8E6E6"
+                    android:layout_marginVertical="@dimen/_6sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_post_of_group"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5ssp"
+                    android:layout_below="@id/btnJoin"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/actGroup_rcv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingBottom="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_10sdp" />
+                    <ProgressBar
+                        android:id="@+id/actGroup_progress"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_marginTop="@dimen/_36sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:indeterminateTint="@color/primary"/>
+                    <LinearLayout
+                        android:id="@+id/actGroup_llEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_36sdp"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
+                            android:src="@drawable/img_newsfeed_blank"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_newsfeed"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:textSize="@dimen/_14sdp"
+                            android:textColor="@color/primary_text"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNewPost"
@@ -51,166 +269,6 @@
         android:visibility="visible"
         android:backgroundTint="@color/primary" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textTitle"
-        android:orientation="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/re"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageBackground"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_140sdp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_logo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-            <View
-                android:id="@+id/viewSupporter1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_3sdp"
-                android:background="@color/primary"
-                app:layout_constraintTop_toBottomOf="@id/imageBackground"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <RelativeLayout
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@id/imageBackground"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <TextView
-                    android:id="@+id/textGroupName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Group Name"
-                    android:textColor="@color/primary_text"
-                    android:textStyle="bold"
-                    android:padding="@dimen/_5sdp"
-                    android:textSize="@dimen/_15ssp"
-                    android:layout_marginStart="@dimen/_10sdp" />
-
-                <TextView
-                    android:id="@+id/textNumberMember"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:textColor="@color/primary_text"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/_11ssp"
-                    android:layout_below="@id/textGroupName"/>
-
-                <TextView
-                    android:id="@+id/titleSupporter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="members"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="@dimen/_11ssp"
-                    android:layout_below="@id/textGroupName"
-                    android:layout_toRightOf="@id/textNumberMember"/>
-
-                <TextView
-                    android:id="@+id/titleSupporter2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Date created: "
-                    android:textColor="@color/secondary_text"
-                    android:textSize="@dimen/_11ssp"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_below="@id/textNumberMember" />
-
-                <TextView
-                    android:id="@+id/textGroupDateCreated"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_11ssp"
-                    android:textStyle="bold"
-                    android:textColor="@color/primary_text"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_75sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_below="@id/textNumberMember"
-                    android:layout_toRightOf="@id/titleSupporter2"/>
-
-                <TextView
-                    android:id="@+id/textGroupDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="@dimen/_11ssp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:layout_below="@id/textGroupDateCreated"/>
-
-                <Button
-                    android:id="@+id/btnJoin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="JOIN"
-                    android:textStyle="bold"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_below="@id/textGroupDescription"/>
-
-
-
-
-            </RelativeLayout>
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_4sdp"
-            android:background="#E8E6E6"
-            android:layout_marginVertical="@dimen/_6sdp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="All post of Group"
-            android:textColor="@color/primary_text"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_5ssp"
-            android:layout_below="@id/btnJoin"/>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </FrameLayout>
-
-
-
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

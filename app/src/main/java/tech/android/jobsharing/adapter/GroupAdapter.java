@@ -59,7 +59,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         Group group = groupList.get(position);
         holder.txtName.setText(group.getGroupName());
         holder.txtDescription.setText(group.getGroupDescription());
-        holder.txtDateCreated.setText("Date created: "+group.getDateCreated());
+        holder.txtDateCreated.setText(mContext.getString(R.string.date_created)+ " "+group.getDateCreated());
         //load image
         if (!group.getImagePath().isEmpty()){
             final ImageLoader imageLoader = ImageLoader.getInstance();

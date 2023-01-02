@@ -11,6 +11,7 @@ import tech.android.jobsharing.databinding.ActivityWebViewBinding;
 public class WebViewActivity extends AppCompatActivity {
 
     private ActivityWebViewBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

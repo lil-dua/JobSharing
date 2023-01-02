@@ -110,4 +110,30 @@
     <string name="than_1_year_experience">Hơn 1 năm kinh nghiệm</string>
     <string name="than_2_year_experience">Hơn 2 năm kinh nghiệm</string>
     <string name="persons">người</string>
+    <string name="all_post_of_group">Tất cả bài đăng của Nhóm</string>
+    <string name="date_created">Ngày tạo:</string>
+    <string name="members">các thành viên</string>
+    <string name="join">THAM GIA</string>
+    <string name="seconds">giây</string>
+    <string name="minutes">phút</string>
+    <string name="hours">giờ</string>
+    <string name="days">ngày</string>
+    <string name="yes">Đúng</string>
+    <string name="no">Không</string>
+    <string name="remove">Gỡ bỏ</string>
+    <string name="txt_continue">Tiếp tục</string>
+    <string name="format_comments">%s bình luận</string>
+    <string name="new_message">Tin nhắn mới</string>
+    <string name="do_you_want_to_stop">Bạn có muốn dừng lại không?</string>
+    <string name="do_you_want_to_stop_change">Bạn có muốn ngừng thay đổi không?</string>
+    <string name="do_you_want_to_remove">Bạn có muốn xóa bài đăng này không?</string>
+    <string name="years">năm</string>
+    <string name="months">tháng</string>
+    <string name="week">tuần</string>
+    <string name="ago">trước</string>
+    <string name="liked_by">Thích bởi</string>
+    <string name="and">và</string>
+    <string name="others">người khác</string>
+    <string name="leave">Rời nhóm</string>
+
 </resources>

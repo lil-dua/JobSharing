@@ -33,9 +33,10 @@ import tech.android.jobsharing.databinding.ActivityNewPostBinding;
 import tech.android.jobsharing.models.User;
 import tech.android.jobsharing.utils.Methods;
 
-public class NewPostActivity extends BaseActivity {
+public class NewPostGroupActivity extends BaseActivity {
     private String encodeImage;
     private String userId;
+    private String groupId;
     private ActivityNewPostBinding binding;
     private  Uri imageUri;
     DatabaseReference databaseReference,data;
@@ -45,6 +46,8 @@ public class NewPostActivity extends BaseActivity {
     Methods method;
     int count = 0;
     String postCount;
+    public static final String DATA_GROUP_ID = "data_group_id";
+
     @Override
     protected void initAction() {
         binding.imageBack.setOnClickListener(v -> DialogCancel());
@@ -57,6 +60,7 @@ public class NewPostActivity extends BaseActivity {
     @Override
     protected void initData() {
         getUserDetails();
+        groupId = getIntent().getStringExtra(DATA_GROUP_ID);
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         method = new Methods();
@@ -133,7 +137,7 @@ public class NewPostActivity extends BaseActivity {
     }
     private void upLoadImage() {
         if (imageUri != null) {
-            final ProgressDialog progressDialog = new ProgressDialog(NewPostActivity.this);
+            final ProgressDialog progressDialog = new ProgressDialog(NewPostGroupActivity.this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
             String status = binding.actNewPostEdtStatus.getText().toString().trim();
@@ -160,7 +164,7 @@ public class NewPostActivity extends BaseActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressDialog.dismiss();
-                    Toast.makeText(NewPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewPostGroupActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     setResultCancel();
 
                 }
@@ -197,7 +201,7 @@ public class NewPostActivity extends BaseActivity {
         hashMappp.put("post_id", post_id);
         hashMappp.put("tags", tags);
         hashMappp.put("userId", user_id);
-        databaseReference.child("Post").child(user_id).child(post_id).setValue(hashMappp);
+        databaseReference.child("Post_Group").child(groupId).child(user_id).child(post_id).setValue(hashMappp);
     }
     public void addPostNoImage(String caption, String date_Created,String post_id, String user_id, String tags){
         HashMap<String, String> hashMappp = new HashMap<>();
@@ -206,7 +210,7 @@ public class NewPostActivity extends BaseActivity {
         hashMappp.put("post_id", post_id);
         hashMappp.put("tags", tags);
         hashMappp.put("userId", user_id);
-        databaseReference.child("Post").child(user_id).child(post_id).setValue(hashMappp);
+        databaseReference.child("Post_Group").child(groupId).child(user_id).child(post_id).setValue(hashMappp);
 
     }
 

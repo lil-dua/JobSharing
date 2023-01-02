@@ -109,4 +109,30 @@
     <string name="than_1_year_experience">Than 1 year experience</string>
     <string name="than_2_year_experience">Than 2 year experience</string>
     <string name="persons">persons</string>
+    <string name="all_post_of_group">All post of Group</string>
+    <string name="date_created">Date created:</string>
+    <string name="members">members</string>
+    <string name="join">JOIN</string>
+    <string name="seconds">seconds</string>
+    <string name="minutes">minutes</string>
+    <string name="hours">hours</string>
+    <string name="days">days</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="remove">Remove</string>
+    <string name="txt_continue">Continue</string>
+    <string name="format_comments"> %s comments</string>
+    <string name="new_message">New message</string>
+    <string name="do_you_want_to_stop">Do you want to stop?</string>
+    <string name="do_you_want_to_stop_change">Do you want to stop change?</string>
+    <string name="do_you_want_to_remove">Do you want to remove this post?</string>
+    <string name="years">years</string>
+    <string name="months">months</string>
+    <string name="week">week</string>
+    <string name="ago">ago</string>
+    <string name="liked_by">Liked by</string>
+    <string name="and">and</string>
+    <string name="others">others</string>
+    <string name="leave">Leave</string>
+
 </resources>

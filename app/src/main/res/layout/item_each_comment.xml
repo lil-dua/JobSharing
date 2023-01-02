@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_4sdp"
                 android:layout_marginTop="5dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/itComment_tvLikes"

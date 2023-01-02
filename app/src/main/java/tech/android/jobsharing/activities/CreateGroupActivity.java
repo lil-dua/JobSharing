@@ -3,7 +3,9 @@ package tech.android.jobsharing.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +29,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
+import tech.android.jobsharing.R;
 import tech.android.jobsharing.databinding.ActivityCreateGroupBinding;
+import tech.android.jobsharing.utils.LanguageConfig;
 
 public class CreateGroupActivity extends AppCompatActivity {
 
@@ -40,6 +44,15 @@ public class CreateGroupActivity extends AppCompatActivity {
     private String groupId;
     int count = 0;
     int PICK_IMAGE_REQUEST = 1;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        SharedPreferences sharedPref = newBase.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String language = sharedPref.getString("language", "vi");
+        Context context = LanguageConfig.changeLanguage(newBase, language);
+        super.attachBaseContext(context);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +81,11 @@ public class CreateGroupActivity extends AppCompatActivity {
     //Cancel dialog
     private void DialogCancel(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Do you want to stop?");
+        builder.setMessage(getString(R.string.do_you_want_to_stop));
         //Confirm:
-        builder.setNegativeButton("Yes",(dialogInterface, i) -> onBackPressed());
+        builder.setNegativeButton(getString(R.string.yes),(dialogInterface, i) -> onBackPressed());
         //Stay:
-        builder.setPositiveButton("No",(dialogInterface, i) -> {
+        builder.setPositiveButton(R.string.no,(dialogInterface, i) -> {
             //Stay
         });
         builder.show();
@@ -147,6 +160,12 @@ public class CreateGroupActivity extends AppCompatActivity {
         hashMap.put("groupId",groupId);
         hashMap.put("userId",userId);
         hashMap.put("dateCreated",dateCreated);
+        hashMap.put("member","1");
+        databaseReference.child("Member")
+                .child(groupId)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("user_id")
+                .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.child("Groups").child(userId).child(groupId).setValue(hashMap);
     }
 

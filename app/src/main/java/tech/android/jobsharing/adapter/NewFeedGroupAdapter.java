@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import tech.android.jobsharing.R;
-import tech.android.jobsharing.activities.CommentActivity;
+import tech.android.jobsharing.activities.CommentGroupActivity;
 import tech.android.jobsharing.activities.ProfileViewerActivity;
 import tech.android.jobsharing.models.Comments;
 import tech.android.jobsharing.models.Likes;
@@ -45,14 +45,16 @@ import tech.android.jobsharing.models.Post;
 import tech.android.jobsharing.models.User;
 import tech.android.jobsharing.utils.TimeAgo;
 
-public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHolder>{
-    public NewFeedAdapter(@NonNull Context context, @NonNull List<Post> objects) {
+public class NewFeedGroupAdapter extends RecyclerView.Adapter<NewFeedGroupAdapter.ViewHolder>{
+    public NewFeedGroupAdapter(@NonNull Context context, @NonNull List<Post> objects, String groupId) {
         this.mContext = context;
         this.objects = objects;
+        this.groupId = groupId;
         mReference = FirebaseDatabase.getInstance().getReference();
+        currentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    private String TAG = "NewFeedAdapter";
+    private String TAG = "NewFeedGroupAdapter";
     private Boolean isGoneFollow = false;
     public interface OnLoadMoreItemsListener{
         void onLoadMoreItems();
@@ -65,6 +67,8 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
     private Context mContext;
     private DatabaseReference mReference;
     private String currentUsername = "";
+    private String currentId = "";
+    private String groupId = "";
     private ProgressBar mProgressBar;
     private List<Post> objects;
 
@@ -72,13 +76,13 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
 
     @NonNull
     @Override
-    public NewFeedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NewFeedGroupAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_new_feed,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewFeedAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewFeedGroupAdapter.ViewHolder holder, int position) {
         Post post = objects.get(position);
         if (position == 0)
             holder.line.setVisibility(View.GONE);
@@ -88,7 +92,6 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
         holder.photo = post;
         holder.detector = new GestureDetector( holder.itemView.getContext(), new GestureListener(holder));
         holder.users = new StringBuilder();
-        String currentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         if (currentId.equals(post.getUser_id())){
             holder.follow.setVisibility(View.GONE);
             holder.unFollow.setVisibility(View.GONE);
@@ -117,10 +120,11 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
         holder.comments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent b = new Intent(mContext, CommentActivity.class);
+                Intent b = new Intent(mContext, CommentGroupActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("Post", post);
                 b.putExtra("commentcount",comments.size());
+                b.putExtra("groupId",groupId);
                 b.putExtras(bundle);
                 mContext.startActivity(b);
 
@@ -173,10 +177,11 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
                     holder.comment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent b = new Intent(mContext, CommentActivity.class);
+                            Intent b = new Intent(mContext, CommentGroupActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putParcelable("Post", post);
                             b.putExtra("commentcount",comments.size());
+                            b.putExtra("groupId",groupId);
                             b.putExtras(bundle);
                             mContext.startActivity(b);
                         }
@@ -291,10 +296,10 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
             Query query = reference
-                    .child("Post")
+                    .child("Post_Group")
+                    .child(groupId)
                     .child(mHolder.photo.getUser_id())
                     .child(mHolder.photo.getPhoto_id())
                     .child("likes");
@@ -306,7 +311,8 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
                         if(mHolder.likeByCurrentUser &&
                                 singleSnapshot.getValue(Likes.class).getUser_id()
                                         .equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                            mReference.child("Post")
+                            mReference.child("Post_Group")
+                                    .child(groupId)
                                     .child(mHolder.photo.getUser_id())
                                     .child(mHolder.photo.getPhoto_id())
                                     .child("likes")
@@ -380,7 +386,8 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
         try{
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
             Query query = reference
-                    .child("Post")
+                    .child("Post_Group")
+                    .child(groupId)
                     .child(holder.photo.getUser_id())
                     .child(holder.photo.getPhoto_id())
                     .child("likes");
@@ -421,29 +428,29 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
 
                                 int length = splitUsers.length;
                                 if(length == 1){
-                                    holder.likesString = mContext.getString(R.string.liked_by) + " " + splitUsers[0];
+                                    holder.likesString = "Liked by " + splitUsers[0];
                                 }
                                 else if(length == 2){
-                                    holder.likesString = mContext.getString(R.string.liked_by) + " " + splitUsers[0]
-                                            + " " +mContext.getString(R.string.and) + "  " + splitUsers[1];
+                                    holder.likesString = "Liked by " + splitUsers[0]
+                                            + " and " + splitUsers[1];
                                 }
                                 else if(length == 3){
-                                    holder.likesString = mContext.getString(R.string.liked_by) + " " + splitUsers[0]
+                                    holder.likesString = "Liked by " + splitUsers[0]
                                             + ", " + splitUsers[1]
-                                            + " " +mContext.getString(R.string.and) + "  " + splitUsers[2];
+                                            + " and " + splitUsers[2];
 
                                 }
                                 else if(length == 4){
-                                    holder.likesString = mContext.getString(R.string.liked_by) +  " " + splitUsers[0]
+                                    holder.likesString = "Liked by " + splitUsers[0]
                                             + ", " + splitUsers[1]
                                             + ", " + splitUsers[2]
-                                            + " " +mContext.getString(R.string.and) + "  " + splitUsers[3];
+                                            + " and " + splitUsers[3];
                                 }
                                 else if(length > 4){
-                                    holder.likesString =mContext.getString(R.string.liked_by) +  " " + splitUsers[0]
+                                    holder.likesString = "Liked by " + splitUsers[0]
                                             + ", " + splitUsers[1]
                                             + ", " + splitUsers[2]
-                                            + " " +mContext.getString(R.string.and) + "  " + (splitUsers.length - 3) + " " +mContext.getString(R.string.others);
+                                            + " and " + (splitUsers.length - 3) + " others";
                                 }
                                 Log.d(TAG, "onDataChange: likes string: " + holder.likesString);
                                 //setup likes string
@@ -521,27 +528,8 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
             Log.e(TAG, "loadMoreData: ClassCastException: " +e.getMessage() );
         }
     }
-    private String getTimestampDifference(Post photo){
-        Log.d(TAG, "getTimestampDifference: getting timestamp difference.");
-        String difference = "";
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date today = c.getTime();
-        sdf.format(today);
-        Date timestamp;
-        final String photoTimestamp = photo.getDate_Created();
-        try{
-            timestamp = sdf.parse(photoTimestamp);
-            difference = String.valueOf(Math.round(((today.getTime() - timestamp.getTime()) / 1000 / 60 / 60 / 24 )));
-        }catch (ParseException e){
-            Log.e(TAG, "getTimestampDifference: ParseException: " + e.getMessage() );
-            difference = "0";
-        }
-        return difference;
-    }
     private void addLikeNotification(String userid,String postid){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications");
-
         HashMap<String, Object> hashMappp = new HashMap<>();
         hashMappp.put("userid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         hashMappp.put("postid", postid);
@@ -655,7 +643,7 @@ public class NewFeedAdapter extends RecyclerView.Adapter<NewFeedAdapter.ViewHold
                     String postCount = Integer.toString(Integer.parseInt(snapshot.child("followers").getValue().toString()) + 1);
                     data.child("followers").setValue(postCount);
                 }else
-                     data.child("followers").setValue("1");
+                    data.child("followers").setValue("1");
             }
 
             @Override

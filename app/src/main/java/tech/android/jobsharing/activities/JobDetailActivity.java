@@ -55,7 +55,7 @@ public class JobDetailActivity extends BaseActivity {
         binding.actJobDetailTvNumberEmployee.setText(job.getNumberEmployee());
         binding.actJobDetailTvWorkplace.setText(job.getWorkplaceType());
         binding.actJobDetailTvDescription.setText(job.getDescription());
-        binding.actJobTvTime.setText((new TimeAgo()).covertTimeToText(job.getDateCreated()));
+        binding.actJobTvTime.setText((new TimeAgo(this)).covertTimeToText(job.getDateCreated()));
         if (!job.getImageCompany().isEmpty()){
             final ImageLoader imageLoader = ImageLoader.getInstance();
             imageLoader.displayImage(job.getImageCompany(), binding.actJobDetailImvCompany);

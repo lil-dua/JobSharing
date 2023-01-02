@@ -7,10 +7,9 @@ import android.os.Parcelable;
  * Created by HoangRyan aka LilDua on 12/20/2022.
  */
 public class Group implements Parcelable {
-    private String groupName, groupDescription, imagePath, groupId, userId,dateCreated;
-    private Integer member;
+    private String groupName, groupDescription, imagePath, groupId, userId,dateCreated,member;
 
-    public Group(String groupName, String groupDescription, String imagePath,String groupId,String userId, Integer member,String dateCreated) {
+    public Group(String groupName, String groupDescription, String imagePath,String groupId,String userId, String member,String dateCreated) {
         this.groupName = groupName;
         this.groupDescription = groupDescription;
         this.imagePath = imagePath;
@@ -31,11 +30,7 @@ public class Group implements Parcelable {
         groupId = in.readString();
         userId = in.readString();
         dateCreated = in.readString();
-        if (in.readByte() == 0) {
-            member = null;
-        } else {
-            member = in.readInt();
-        }
+        member = in.readString();
     }
 
     public static final Creator<Group> CREATOR = new Creator<Group>() {
@@ -100,11 +95,11 @@ public class Group implements Parcelable {
         this.userId = userId;
     }
 
-    public Integer getMember() {
+    public String getMember() {
         return member;
     }
 
-    public void setMember(Integer member) {
+    public void setMember(String member) {
         this.member = member;
     }
 
@@ -129,11 +124,6 @@ public class Group implements Parcelable {
         dest.writeString(groupId);
         dest.writeString(userId);
         dest.writeString(dateCreated);
-        if (member == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(member);
-        }
+        dest.writeString(member);
     }
 }

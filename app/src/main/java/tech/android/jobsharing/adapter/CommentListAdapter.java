@@ -33,6 +33,7 @@ import java.util.List;
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.models.Comments;
 import tech.android.jobsharing.models.User;
+import tech.android.jobsharing.utils.TimeAgo;
 
 
 public class CommentListAdapter extends ArrayAdapter<Comments> {
@@ -76,15 +77,7 @@ public class CommentListAdapter extends ArrayAdapter<Comments> {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
-
-        //set the timestamp difference
-        String timestampDifference = getTimestampDifference(getItem(position));
-        if(!timestampDifference.equals("0")){
-            holder.timestamp.setText(timestampDifference + " d");
-        }else{
-            holder.timestamp.setText("today");
-        }
-
+        holder.timestamp.setText((new TimeAgo(mContext)).covertTimeToText(getItem(position).getDate_created()));
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
                 .child("Users")
@@ -107,24 +100,6 @@ public class CommentListAdapter extends ArrayAdapter<Comments> {
         return convertView;
     }
 
-    private String getTimestampDifference(Comments comment){
-
-        String difference = "";
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date today = c.getTime();
-        sdf.format(today);
-        Date timestamp;
-        final String photoTimestamp = comment.getDate_created();
-        try{
-            timestamp = sdf.parse(photoTimestamp);
-            difference = String.valueOf(Math.round(((today.getTime() - timestamp.getTime()) / 1000 / 60 / 60 / 24 )));
-        }catch (ParseException e){
-            Toast.makeText(getContext(),"getTimestampDifference: ParseException: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-            difference = "0";
-        }
-        return difference;
-    }
     public Bitmap getProfileImage(String encodedImage){
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes,0, bytes.length);

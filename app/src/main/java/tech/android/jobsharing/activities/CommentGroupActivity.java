@@ -29,12 +29,13 @@ import tech.android.jobsharing.models.Comments;
 import tech.android.jobsharing.models.Post;
 import tech.android.jobsharing.models.User;
 
-public class CommentActivity extends BaseActivity {
+public class CommentGroupActivity extends BaseActivity {
 
     private static final String TAG ="CommentActivity" ;
     Post post;
     ArrayList<Comments> mComments;
     Integer commentCount;
+    String groupId;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -52,6 +53,7 @@ public class CommentActivity extends BaseActivity {
         try{
             post = getPhotoFromBundle();
             commentCount = getIntent().getIntExtra("commentcount",0);
+            groupId = getIntent().getStringExtra("groupId");
             Log.d(TAG, "getPhotoFromBundle: arguments: " + post);
 
             getCommentList();
@@ -105,7 +107,7 @@ public class CommentActivity extends BaseActivity {
                     binding.actCommentEdtComment.setText("");
                     closeKeyboard();
                 }else{
-                    Toast.makeText(CommentActivity.this, "you can't post a blank comment", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CommentGroupActivity.this, "you can't post a blank comment", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -124,7 +126,8 @@ public class CommentActivity extends BaseActivity {
             binding.actCommentListView.setVisibility(View.GONE);
         }
 
-        myRef.child("Post")
+        myRef.child("Post_Group")
+                .child(groupId)
                 .child(post.getUser_id())
                 .child(post.getPhoto_id())
                 .child("comments")
@@ -135,7 +138,8 @@ public class CommentActivity extends BaseActivity {
                         Log.d(TAG, "onChildAdded: child added.");
 
                         Query query = myRef
-                                .child("Post")
+                                .child("Post_Group")
+                                .child(groupId)
                                 .child(post.getUser_id())
                                 .orderByChild("post_id")
                                 .equalTo(post.getPhoto_id());
@@ -241,7 +245,8 @@ public class CommentActivity extends BaseActivity {
         //insert into photos node
 
         //insert into user_photos node
-        myRef.child("Post")
+        myRef.child("Post_Group")
+                .child(groupId)
                 .child(post.getUser_id())
                 .child(post.getPhoto_id())
                 .child("comments")
