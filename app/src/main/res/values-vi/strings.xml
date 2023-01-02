@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JobSharing</string>
+    <string name="create_new_account">Tạo tài khoản</string>
+    <string name="add_image">Thêm ảnh</string>
+    <string name="name">Tên</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="confirm_password">Nhập lại mật khẩu</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="welcome_back">Chào mừng quay trở lại!</string>
+    <string name="login_to_continue">Đăng nhập để tiếp tục</string>
+    <string name="student_id">Mã sinh viên</string>
+    <string name="kma_social_media">KMA SOCIAL MEDIA</string>
+    <string name="recent_conversations">Cuộc trò chuyện gần đây</string>
+    <string name="setting">Cài đặt</string>
+    <string name="profile">Hồ sơ</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="home">Trang chủ</string>
+    <string name="create_a_new_post">Tạo bài viết mới</string>
+    <string name="edit_profile">Chỉnh sửa hồ sơ</string>
+    <string name="post">Bài viết</string>
+    <string name="follower">Người theo dõi</string>
+    <string name="following">Đang theo dõi</string>
+    <string name="edit_your_profile">Chỉnh sửa trang cá nhân</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="enter_email_or_student_id">Nhập email </string>
+    <string name="notification">Thông báo</string>
+    <string name="about_us">About Us</string>
+    <string name="general">Chung</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="dark_mode">Dark mode</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Tin nhắn</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="do_you_have_any_account">Bạn chưa có tài khoản?</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="enter_your_email">Nhập email</string>
+    <string name="send_link_reset_password">Gửi link cập nhật mật khẩu</string>
+    <string name="back_to">Quay trở về</string>
+    <string name="type_a_message">Nhập tin nhắn</string>
+    <string name="online">Trực tuyến</string>
+    <string name="description">Mô tả</string>
+    <string name="link">Trang web</string>
+    <string name="change_your_avatar">Thay đổi ảnh</string>
+    <string name="username">Tên người dùng</string>
+    <string name="edit_your_private_details">Chỉnh sửa thông tin riêng tư</string>
+    <string name="change_you_bio">Sửa bio</string>
+    <string name="add_website">Thêm website</string>
+    <string name="your_private_details">Thông tin riêng tư</string>
+    <string name="private_details">Thông tin riêng tư</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="job_sharing">JOB SHARING</string>
+    <string name="no_comment">Không có bình luận</string>
+    <string name="no_newsfeed">Không có bài viết</string>
+    <string name="likes">Thích</string>
+    <string name="comments">Bình luận</string>
+    <string name="add_follow">+ Theo dõi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="job_title">Tiêu đề công việc*</string>
+    <string name="company">Công ty*</string>
+    <string name="workplace_type">Hình thức làm việc*</string>
+    <string name="job_location">Địa chỉ làm việc*</string>
+    <string name="job_type">Kiểu làm việc*</string>
+    <string name="post_description">Mô tả bài viết*</string>
+    <string name="add_description">Thêm mô tả</string>
+    <string name="chose_the_workplace_type">Chọn hình thức làm việc</string>
+    <string name="on_site">On-site</string>
+    <string name="work_in_person">Nhân viên đến làm việc tại công ty.</string>
+    <string name="hybrid">Hybrid</string>
+    <string name="employees_work_on_site_and_off_site">Nhân viên làm việc linh hoạt</string>
+    <string name="employees_work_off_side">Nhân viên không cần đến công ty</string>
+    <string name="remote">Remote</string>
+    <string name="add_location">Thêm địa điểm</string>
+    <string name="add_job_type">Thêm kiểu làm việc</string>
+    <string name="add_company">Thêm công ty</string>
+    <string name="add_job_position">Thêm position</string>
+    <string name="please_fill">Vui lòng điền đầy đủ thông tin</string>
+    <string name="posted_successfully">Đăng tải thành công</string>
+    <string name="job_description">Mô tả công việc</string>
+    <string name="meet_the_hiring_team">Nhân viên tuyển dụng</string>
+    <string name="contact">Liên hệ</string>
+    <string name="connect">Kết nối</string>
+    <string name="message">Nhắn tin</string>
+    <string name="job">Công việc</string>
+    <string name="show_all_post">Hiển thị bài viết</string>
+    <string name="follow">Theo dõi</string>
+    <string name="group_image">Ảnh bìa nhóm</string>
+    <string name="employees">Nhân viên</string>
+    <string name="add_number_of_employee">Thêm số lượng nhân viên</string>
+    <string name="number_employees">Số lượng nhân viên*</string>
+    <string name="none_experience">Chưa có kinh nghiệm</string>
+    <string name="choose_the_experience_requirement">Chọn yêu cầu về kinh nghiệm</string>
+    <string name="under_1_year_experience">Dưới 1 năm kinh nghiệm</string>
+    <string name="than_1_year_experience">Hơn 1 năm kinh nghiệm</string>
+    <string name="than_2_year_experience">Hơn 2 năm kinh nghiệm</string>
+    <string name="persons">người</string>
+</resources>
