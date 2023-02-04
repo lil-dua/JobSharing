@@ -2,12 +2,9 @@ package tech.android.jobsharing.base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,9 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import kotlin.Unit;
-import tech.android.jobsharing.utils.LanguageConfig;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -95,12 +89,5 @@ public abstract class BaseActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-    }
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        SharedPreferences sharedPref = newBase.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        String language = sharedPref.getString("language", "vi");
-        Context context = LanguageConfig.changeLanguage(newBase, language);
-        super.attachBaseContext(context);
     }
 }

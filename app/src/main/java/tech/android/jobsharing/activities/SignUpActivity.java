@@ -1,8 +1,6 @@
 package tech.android.jobsharing.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -27,7 +25,6 @@ import java.io.InputStream;
 
 import tech.android.jobsharing.databinding.ActivitySignUpBinding;
 import tech.android.jobsharing.models.User;
-import tech.android.jobsharing.utils.LanguageConfig;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -36,13 +33,6 @@ public class SignUpActivity extends AppCompatActivity {
     private String encodeImage;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        SharedPreferences sharedPref = newBase.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        String language = sharedPref.getString("language", "vi");
-        Context context = LanguageConfig.changeLanguage(newBase, language);
-        super.attachBaseContext(context);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,9 +98,6 @@ public class SignUpActivity extends AppCompatActivity {
                     loading(false);
                     showToast(exception.getMessage());
                 });
-
-
-
     }
 
     //show Toast

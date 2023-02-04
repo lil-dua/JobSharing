@@ -150,7 +150,7 @@ public class CommentActivity extends BaseActivity {
                                     photo.setTags(objectMap.get("tags").toString());
                                     photo.setPhoto_id(objectMap.get("post_id").toString());
                                     if (objectMap.get("userId") != null)
-                                    photo.setUser_id(objectMap.get("userId").toString());
+                                        photo.setUser_id(objectMap.get("userId").toString());
                                     photo.setDate_Created(objectMap.get("date_Created").toString());
                                     if (objectMap.get("image_Path") != null)
                                         photo.setImage_Path(objectMap.get("image_Path").toString());
@@ -161,7 +161,6 @@ public class CommentActivity extends BaseActivity {
                                     firstComment.setComment(post.getCaption());
                                     firstComment.setDate_created(post.getDate_Created());
 
-//                                    List<Comments> commentsList = new ArrayList<Comments>();
                                     for (DataSnapshot dSnapshot : singleSnapshot
                                             .child("comments").getChildren()){
                                         Comments comments = new Comments();

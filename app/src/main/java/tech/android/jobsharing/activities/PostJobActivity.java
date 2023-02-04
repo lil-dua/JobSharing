@@ -9,18 +9,13 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -45,7 +40,7 @@ public class PostJobActivity extends BaseActivity {
     @Override
     protected void initAction() {
         workplaceType = getString(R.string.on_site);
-        binding.actPostJobLlWorkplace.setOnClickListener(v -> {
+        binding.actPostJobTvWorkplace.setOnClickListener(v -> {
             WorkplaceDialog dialog = WorkplaceDialog.newInstance(workplaceType, type -> {
                 workplaceType = type;
                 binding.actPostJobTvWorkplace.setText(type);
@@ -112,6 +107,8 @@ public class PostJobActivity extends BaseActivity {
         hashMappp.put("numberEmployee", job.getNumberEmployee());
         hashMappp.put("experience", job.getExperience());
         hashMappp.put("description", job.getDescription());
+        hashMappp.put("requirement",job.getRequirement());
+        hashMappp.put("benefit",job.getBenefit());
         hashMappp.put("jobId", job.getJobId());
         hashMappp.put("userId", job.getUserId());
         hashMappp.put("dateCreated", job.getDateCreated());
@@ -148,51 +145,37 @@ public class PostJobActivity extends BaseActivity {
             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             String RandomUId = UUID.randomUUID().toString();
             ref = storageReference.child("company/users/"+"/"+userId+"/photo"+RandomUId);
-            ref.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Job job = new Job(
-                                    binding.actPostJobEdtTitle.getText().toString(),
-                                    binding.actPostJobEdtCompany.getText().toString(),
-                                    String.valueOf(uri),
-                                    binding.actPostJobTvWorkplace.getText().toString(),
-                                    binding.actPostJobTvLocation.getText().toString(),
-                                    binding.actPostJobTvType.getText().toString(),
-                                    binding.actPostJobTvNumberEmployee.getText().toString(),
-                                    binding.actPostJobTvExperience.getText().toString(),
-                                    binding.actPostJobTvDescription.getText().toString(),
-                                    RandomUId,
-                                    userId,
-                                    getTimestamp()
-                            );
-                            addJob(job);
-                            progressDialog.dismiss();
-                            showToast(getString(R.string.posted_successfully));
-                            setResultOk();
-                        }
-                    });
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
+            ref.putFile(imageUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl()
+                .addOnSuccessListener(uri -> {
+                    Job job = new Job(
+                        binding.actPostJobEdtTitle.getText().toString(),
+                        binding.actPostJobEdtCompany.getText().toString(),
+                        String.valueOf(uri),
+                        binding.actPostJobTvWorkplace.getText().toString(),
+                        binding.actPostJobTvLocation.getText().toString(),
+                        binding.actPostJobTvType.getText().toString(),
+                        binding.actPostJobTvNumberEmployee.getText().toString(),
+                        binding.actPostJobTvExperience.getText().toString(),
+                        binding.actPostJobTvDescription.getText().toString(),
+                        binding.actPostJobTvRequirement.getText().toString(),
+                        binding.actPostJobTvBenefit.getText().toString(),
+                        RandomUId,
+                        userId,
+                        getTimestamp()
+                    );
+                    addJob(job);
+                    progressDialog.dismiss();
+                    showToast(getString(R.string.posted_successfully));
+                    setResultOk();
+                })).addOnFailureListener(e -> {
                     progressDialog.dismiss();
                     Toast.makeText(PostJobActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     setResultCancel();
-
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                }).addOnProgressListener(taskSnapshot -> {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                     progressDialog.setMessage("Uploaded " + (int) progress + "%");
                     progressDialog.setCanceledOnTouchOutside(false);
-                }
-            });
-
+                });
         }else {
             String RandomUId = UUID.randomUUID().toString();
             Job job = new Job(
@@ -205,6 +188,8 @@ public class PostJobActivity extends BaseActivity {
                     binding.actPostJobTvNumberEmployee.getText().toString(),
                     binding.actPostJobTvExperience.getText().toString(),
                     binding.actPostJobTvDescription.getText().toString(),
+                    binding.actPostJobTvRequirement.getText().toString(),
+                    binding.actPostJobTvBenefit.getText().toString(),
                     RandomUId,
                     userId,
                     getTimestamp()

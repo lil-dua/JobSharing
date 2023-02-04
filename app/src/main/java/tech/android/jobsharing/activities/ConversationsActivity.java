@@ -88,7 +88,9 @@ public class ConversationsActivity extends AppCompatActivity {
     private void processSearch(String s){
         FirebaseRecyclerOptions<User> options =
                 new FirebaseRecyclerOptions.Builder<User>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("name").startAt(s).endAt(s+"\uf8ff"), User.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference()
+                                .child("Users").orderByChild("name")
+                                .startAt(s).endAt(s+"\uf8ff"), User.class)
                         .build();
         searchUserAdapter = new SearchUserAdapter(getApplicationContext(),options);
         searchUserAdapter.startListening();

@@ -279,6 +279,48 @@
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/_10sdp" />
 
+            <TextView
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Requirement"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:textColor="@color/primary_text"/>
+
+
+            <TextView
+                android:id="@+id/actJobDetail_tvRequirement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="Yêu cầu ứng viên"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_10sdp" />
+
+            <TextView
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Benefit"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:textColor="@color/primary_text"/>
+
+
+            <TextView
+                android:id="@+id/actJobDetail_tvBenefit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="Quyền lợi được hưởng"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_10sdp" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

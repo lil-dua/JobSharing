@@ -207,7 +207,6 @@ public class NewPostActivity extends BaseActivity {
         hashMappp.put("tags", tags);
         hashMappp.put("userId", user_id);
         databaseReference.child("Post").child(user_id).child(post_id).setValue(hashMappp);
-
     }
 
 

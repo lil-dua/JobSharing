@@ -21,7 +21,7 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         SharedPreferences sharedPref = newBase.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        String language = sharedPref.getString("language", "vi");
+        String language = sharedPref.getString("language", "en");
         Context context = LanguageConfig.changeLanguage(newBase, language);
         super.attachBaseContext(context);
     }

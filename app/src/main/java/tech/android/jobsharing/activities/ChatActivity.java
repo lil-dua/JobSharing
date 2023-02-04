@@ -1,7 +1,5 @@
 package tech.android.jobsharing.activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -38,7 +36,6 @@ import tech.android.jobsharing.models.User;
 import tech.android.jobsharing.network.ApiClient;
 import tech.android.jobsharing.network.ApiService;
 import tech.android.jobsharing.utils.Constant;
-import tech.android.jobsharing.utils.LanguageConfig;
 
 
 public class ChatActivity extends AppCompatActivity {
@@ -51,13 +48,6 @@ public class ChatActivity extends AppCompatActivity {
     private List<ChatMessage> chatMessageList;
     private ApiService apiService;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        SharedPreferences sharedPref = newBase.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        String language = sharedPref.getString("language", "vi");
-        Context context = LanguageConfig.changeLanguage(newBase, language);
-        super.attachBaseContext(context);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +119,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-
                 //push notification
                 try {
                     JSONArray tokens = new JSONArray();
@@ -174,12 +163,10 @@ public class ChatActivity extends AppCompatActivity {
                     chatAdapter = new ChatAdapter(chatMessageList,getBitmapFromEncodedString(receiverImage));
                     binding.chatRecycleView.setAdapter(chatAdapter);
                     chatAdapter.notifyDataSetChanged();
-
                 }
                 binding.chatRecycleView.setVisibility(View.VISIBLE);
                 binding.progressBar.setVisibility(View.GONE);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -208,13 +195,11 @@ public class ChatActivity extends AppCompatActivity {
                                 return;
                             }
                         }
-
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 showToast(t.getMessage());

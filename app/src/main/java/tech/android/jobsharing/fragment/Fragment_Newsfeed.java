@@ -3,6 +3,7 @@ package tech.android.jobsharing.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +49,7 @@ import tech.android.jobsharing.utils.UniversalImageLoader;
 /***
  * Created by HoangRyan aka LilDua on 11/6/2022.
  */
-public class Fragment_Newsfeed extends Fragment {
+public class Fragment_Newsfeed extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private View view;
     private LinearLayout empty;
@@ -62,6 +64,7 @@ public class Fragment_Newsfeed extends Fragment {
     private NewFeedAdapter mAdapter;
     private FloatingActionButton fab;
     int LAUNCH_SECOND_ACTIVITY = 1;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     FirebaseAuth mAuth;
     @Nullable
@@ -86,6 +89,7 @@ public class Fragment_Newsfeed extends Fragment {
         progress = view.findViewById(R.id.fmHome_pbLoading);
         empty = view.findViewById(R.id.fmHome_llEmpty);
         fab = view.findViewById(R.id.fmHome_fab);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         initImageLoader();
         getFollowing();
         displayMorePhotos();
@@ -95,6 +99,8 @@ public class Fragment_Newsfeed extends Fragment {
                 startActivityForResult(new Intent(getActivity(), NewPostActivity.class), LAUNCH_SECOND_ACTIVITY);
             }
         });
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -203,7 +209,7 @@ public class Fragment_Newsfeed extends Fragment {
                         photo.setCaption(objectMap.get("caption").toString());
                         photo.setTags(objectMap.get("tags").toString());
                         if (objectMap.get("post_id") != null)
-                        photo.setPhoto_id(objectMap.get("post_id").toString());
+                            photo.setPhoto_id(objectMap.get("post_id").toString());
                         if (objectMap.get("userId") != null)
                             photo.setUser_id(objectMap.get("userId").toString());
                         photo.setDate_Created(objectMap.get("date_Created").toString());
@@ -270,5 +276,14 @@ public class Fragment_Newsfeed extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onRefresh() {
+        getFollowing();
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            swipeRefreshLayout.setRefreshing(false);
+        },1000);
     }
 }

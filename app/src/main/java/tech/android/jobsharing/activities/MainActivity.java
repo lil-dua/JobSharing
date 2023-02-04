@@ -1,8 +1,6 @@
 package tech.android.jobsharing.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,7 +21,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.adapter.ViewPagerAdapter;
-import tech.android.jobsharing.utils.LanguageConfig;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,13 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     private FirebaseUser mUser;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        SharedPreferences sharedPref = newBase.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        String language = sharedPref.getString("language", "vi");
-        Context context = LanguageConfig.changeLanguage(newBase, language);
-        super.attachBaseContext(context);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

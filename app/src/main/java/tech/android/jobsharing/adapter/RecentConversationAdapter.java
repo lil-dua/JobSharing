@@ -102,6 +102,8 @@ public class RecentConversationAdapter extends RecyclerView.Adapter<RecentConver
                         if(chatMessage.getReceiver().equals(mUser.getUid()) && chatMessage.getSender().equals(userId)
                             || chatMessage.getReceiver().equals(userId) && chatMessage.getSender().equals(mUser.getUid())){
                             theRecentMessage = chatMessage.getMessage();
+                        }else if (chatMessage.equals("")){
+                            theRecentMessage = "";
                         }
                     }
                 }

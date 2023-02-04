@@ -3,9 +3,7 @@ package tech.android.jobsharing.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +29,6 @@ import java.util.UUID;
 
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.databinding.ActivityCreateGroupBinding;
-import tech.android.jobsharing.utils.LanguageConfig;
 
 public class CreateGroupActivity extends AppCompatActivity {
 
@@ -45,13 +42,6 @@ public class CreateGroupActivity extends AppCompatActivity {
     int count = 0;
     int PICK_IMAGE_REQUEST = 1;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        SharedPreferences sharedPref = newBase.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        String language = sharedPref.getString("language", "vi");
-        Context context = LanguageConfig.changeLanguage(newBase, language);
-        super.attachBaseContext(context);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

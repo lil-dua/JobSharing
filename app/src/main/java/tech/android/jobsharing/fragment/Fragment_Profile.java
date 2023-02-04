@@ -133,33 +133,24 @@ public class Fragment_Profile extends Fragment {
                         txtLink.setText(user.getLink());
                     }
                     //check null name
-                    if (user.getName() != null) {
+                    if (user.getName() != null)
                         txtName.setText(user.getName());
-                    }
                     //check null image
-                    if (user.getImage() != null) {
+                    if (user.getImage() != null)
                         imageProfile.setImageBitmap(getProfileImage(user.getImage()));
-                    }
-
                     //text link
                     txtLink.setOnClickListener(v -> {
                         Intent intent = new Intent(getContext(), WebViewActivity.class);
                         intent.putExtra("link", "https://" + user.getLink());
                         startActivity(intent);
                     });
-                    if (objectMap.get("followers") != null) {
+                    if (objectMap.get("followers") != null)
                         numFollower.setText(objectMap.get("followers").toString());
-                    }
-                    ;
-                    if (objectMap.get("following") != null) {
+                    if (objectMap.get("following") != null)
                         numFollower.setText(objectMap.get("following").toString());
-                    }
-
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
         } else {

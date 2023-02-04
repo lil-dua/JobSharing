@@ -1,15 +1,12 @@
 package tech.android.jobsharing.activities;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,19 +20,11 @@ import java.util.Objects;
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.databinding.ActivityEditPrivateDetailsBinding;
 import tech.android.jobsharing.models.User;
-import tech.android.jobsharing.utils.LanguageConfig;
 
 public class EditPrivateDetailsActivity extends AppCompatActivity {
 
     private ActivityEditPrivateDetailsBinding binding;
     private String userId;
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        SharedPreferences sharedPref = newBase.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        String language = sharedPref.getString("language", "vi");
-        Context context = LanguageConfig.changeLanguage(newBase, language);
-        super.attachBaseContext(context);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

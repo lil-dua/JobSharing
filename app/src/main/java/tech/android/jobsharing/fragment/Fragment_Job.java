@@ -3,6 +3,7 @@ package tech.android.jobsharing.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,23 +34,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
 import tech.android.jobsharing.R;
 import tech.android.jobsharing.activities.ConversationsActivity;
 import tech.android.jobsharing.activities.JobDetailActivity;
-import tech.android.jobsharing.activities.NewPostActivity;
 import tech.android.jobsharing.activities.PostJobActivity;
 import tech.android.jobsharing.activities.SignInActivity;
 import tech.android.jobsharing.adapter.JobsAdapter;
-import tech.android.jobsharing.adapter.NewFeedAdapter;
-import tech.android.jobsharing.models.Comments;
 import tech.android.jobsharing.models.Job;
-import tech.android.jobsharing.models.Post;
 import tech.android.jobsharing.utils.UniversalImageLoader;
 
-public class Fragment_Job extends Fragment {
+public class Fragment_Job extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private View view;
     private LinearLayout empty;
@@ -64,6 +60,7 @@ public class Fragment_Job extends Fragment {
     private JobsAdapter mAdapter;
     private FloatingActionButton fab;
     int LAUNCH_SECOND_ACTIVITY = 1;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     FirebaseAuth mAuth;
     @Nullable
@@ -89,6 +86,7 @@ public class Fragment_Job extends Fragment {
         empty = view.findViewById(R.id.fmHome_llEmpty);
         fab = view.findViewById(R.id.fmHome_fab);
         title = view.findViewById(R.id.fmHome_tvTitle);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         initImageLoader();
         getFollowing();
         displayMorePhotos();
@@ -101,6 +99,8 @@ public class Fragment_Job extends Fragment {
                 startActivityForResult(new Intent(getActivity(), PostJobActivity.class), LAUNCH_SECOND_ACTIVITY);
             }
         });
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary);
 
     }
     @Override
@@ -315,6 +315,15 @@ public class Fragment_Job extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onRefresh() {
+        getFollowing();
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            swipeRefreshLayout.setRefreshing(false);
+        },1000);
     }
 }
 

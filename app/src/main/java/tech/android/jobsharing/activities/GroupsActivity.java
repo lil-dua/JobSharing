@@ -59,8 +59,8 @@ public class GroupsActivity extends BaseActivity {
         binding.textGroupName.setText(group.getGroupName());
         binding.textGroupDateCreated.setText(group.getDateCreated());
         if (group.getMember() != null)
-        binding.textNumberMember.setText(group.getMember().toString());
-        binding.textGroupDescription.setText(group.getGroupDescription());
+            binding.textNumberMember.setText(group.getMember().toString());
+            binding.textGroupDescription.setText(group.getGroupDescription());
         //load group background
         if (!group.getImagePath().isEmpty()){
             Glide.with(this).load(group.getImagePath()).into(binding.imageBackground);
@@ -270,15 +270,14 @@ public class GroupsActivity extends BaseActivity {
                     String postCount = Integer.toString(Integer.parseInt(snapshot.child("member").getValue().toString()) + 1);
                     data.child("member").setValue(postCount);
                     binding.textNumberMember.setText(postCount);
-                }else{
-                    data.child("member").setValue("1");
-                    binding.textNumberMember.setText("1");
                 }
-
+//                else{
+//                    data.child("member").setValue("1");
+//                    binding.textNumberMember.setText("1");
+//                }
                 binding.btnJoin.setVisibility(View.GONE);
                 binding.btnLeave.setVisibility(View.VISIBLE);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
