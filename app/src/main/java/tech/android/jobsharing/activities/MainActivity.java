@@ -75,12 +75,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 3:
                     // fragment notification
-                    tab.setIcon(R.drawable.ic_notifications);
-                    break;
-                case 4:
-                    // fragment notification
                     tab.setIcon(R.drawable.ic_job);
                     break;
+//                case 4:
+//                    // fragment notification
+//                    tab.setIcon(R.drawable.ic_job);
+//                    break;
             }
         })).attach();
         viewPager2.setOffscreenPageLimit(5);

@@ -36,10 +36,8 @@ public class MessagingService extends FirebaseMessagingService{
         user.setUserId( remoteMessage.getData().get("userId"));
         user.setName(remoteMessage.getData().get("name"));
         user.setFcmToken(remoteMessage.getData().get("fcmToken"));
-
         int notificationId = new Random().nextInt();
         String channelId = "chat_message";
-
         Intent intent = new Intent(this, ConversationsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent ;
@@ -66,7 +64,6 @@ public class MessagingService extends FirebaseMessagingService{
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             CharSequence charName = "Chat Message";
             String channelDescription = "This notification channel is used for chat message notifications";

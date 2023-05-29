@@ -68,7 +68,8 @@
         android:indeterminateTint="@color/primary" />
 
 
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_6sdp"
@@ -98,6 +99,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +24,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-import tech.android.jobsharing.adapter.NewFeedAdapter;
 import tech.android.jobsharing.adapter.NewFeedGroupAdapter;
 import tech.android.jobsharing.base.BaseActivity;
 import tech.android.jobsharing.databinding.ActivityGroupsBinding;
@@ -271,10 +269,6 @@ public class GroupsActivity extends BaseActivity {
                     data.child("member").setValue(postCount);
                     binding.textNumberMember.setText(postCount);
                 }
-//                else{
-//                    data.child("member").setValue("1");
-//                    binding.textNumberMember.setText("1");
-//                }
                 binding.btnJoin.setVisibility(View.GONE);
                 binding.btnLeave.setVisibility(View.VISIBLE);
             }

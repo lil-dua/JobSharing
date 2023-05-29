@@ -5,6 +5,7 @@ import static com.nostra13.universalimageloader.core.ImageLoader.TAG;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +44,7 @@ import tech.android.jobsharing.utils.UniversalImageLoader;
 /***
  * Created by HoangRyan aka LilDua on 11/6/2022.
  */
-public class Fragment_Group extends Fragment {
+public class Fragment_Group extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private View view;
     private RecyclerView rcvGroups;
@@ -56,6 +58,7 @@ public class Fragment_Group extends Fragment {
     private List<Group> groupList;
     private ArrayList<Group> mPaginatedGroups;
     int LAUNCH_SECOND_ACTIVITY = 1;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Nullable
@@ -79,6 +82,7 @@ public class Fragment_Group extends Fragment {
         imgSearch = view.findViewById(R.id.imageSearch);
         edtSearch = view.findViewById(R.id.editTextSearch);
         fabNewGroup = view.findViewById(R.id.fabNewGroup);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
     }
 
     private void setListeners() {
@@ -89,6 +93,8 @@ public class Fragment_Group extends Fragment {
             Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
             startActivity(intent);
         });
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary);
     }
     private void initImageLoader() {
         UniversalImageLoader universalImageLoader = new UniversalImageLoader(getActivity());
@@ -232,25 +238,14 @@ public class Fragment_Group extends Fragment {
         super.onResume();
     }
 
-//    private void getListGroup(){
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference databaseReference = database.getReference("Groups");
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                groupList.clear();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    Group group = dataSnapshot.getValue(Group.class);
-//                    groupList.add(group);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                showToast("Get list group failed!");
-//            }
-//        });
-//    }
+    @Override
+    public void onRefresh() {
+        getFollowing();
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            swipeRefreshLayout.setRefreshing(false);
+        },1000);
+    }
+
 
 }
